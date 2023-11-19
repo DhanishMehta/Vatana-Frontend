@@ -1,0 +1,49 @@
+.order-status-title {
+  font-size: 120px;
+  line-height: 1;
+  margin-bottom: 40px;
+}
+
+@media (max-width: 1199px) {
+    .ltn__404-area-1 .order-status-title {
+        font-size: 200px;
+    }
+    .ltn__404-area-1 h2 {
+        font-size: 30px;
+    }
+}
+
+@media (max-width: 991px) {
+    .ltn__404-area-2 .order-status-inner {
+        padding: 80px 0 110px;
+    }
+    .order-status-inner p br {
+        display: none;
+    }
+    .order-status-title {
+        font-size: 80px;
+    }
+    .ltn__404-area-1 .order-status-title {
+        font-size: 100px;
+    }
+}
+
+.order-failure {
+    color: #e53e29;
+}
+
+.order-success {
+    color: var(--ltn__secondary-color);
+}
+
+.order-status-primary{
+    background-color: #4EB2F2;
+}
+
+.order-status-progress{
+    background-color: #F4A94A;
+}
+
+.order-status-delivered{
+    background-color: #0CA748;
+}

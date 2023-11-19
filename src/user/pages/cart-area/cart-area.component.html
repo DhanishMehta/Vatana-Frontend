@@ -1,0 +1,110 @@
+<div class="liton__shoping-cart-area mb-120">
+    <div class="container">
+        <div class="row">
+            <div class="col-lg-12">
+                <app-pre-loader *ngIf="isLoading"></app-pre-loader>
+                <div *ngIf="!isLoading && cart.cartItems.length > 0" class="shoping-cart-inner">
+                    <div class="d-flex flex-column overflow-x-scroll">
+                        <table class="table">
+                            <tbody>
+                                <tr *ngFor="let item of cart.cartItems">
+                                    <td style="vertical-align: middle;" class="cart-product-remove"
+                                        (click)="removeEntireProduct(item.cartItemProduct.id!)"><i
+                                            class="bi bi-x fs-4"></i></td>
+                                    <td class="cart-product-image">
+                                        <div style="width: 50px; height: 50px;">
+                                            <a [routerLink]="item.cartItemProduct.absolute_url">
+                                                <img style="max-width: 50px; height: auto;"
+                                                    *ngIf="item.cartItemProduct.images!.length == 0"
+                                                    src="/assets/img/placeholder-image.jpg" alt="#">
+                                            </a>
+                                            <a [routerLink]="item.cartItemProduct.absolute_url">
+                                                <img style="max-width: 50px; height: auto;"
+                                                    *ngIf="item.cartItemProduct.images!.length > 0"
+                                                    [src]="item.cartItemProduct.images![0].s" alt="#">
+                                            </a>
+                                        </div>
+                                    </td>
+                                    <td style="vertical-align: middle;" class="cart-product-info">
+                                        <h4 class="text-truncate"><a
+                                                [routerLink]="item.cartItemProduct.absolute_url">{{item.cartItemProduct.desc}}</a>
+                                        </h4>
+                                    </td>
+                                    <td style="vertical-align: middle;" class="cart-product-price">
+                                        ₹{{item.cartItemProduct.pricing.discount.mrp}}</td>
+                                    <td class="cart-product-quantity">
+                                        <div
+                                            class="d-flex justify-content-around align-items-center border border-secondary-subtle border-1">
+                                            <i class="me-2 bi bi-dash fs-4"
+                                                (click)="deleteFromCart(item.cartItemProduct.id!)"></i>
+                                            <span>{{item.cartItemQuantity}}</span>
+                                            <i class="ms-2 bi bi-plus fs-4"
+                                                (click)="addToCart(item.cartItemProduct.id!)"></i>
+                                        </div>
+                                    </td>
+                                    <td style="vertical-align: middle;" class="cart-product-subtotal">
+                                        ₹{{displayTotal(item.cartItemQuantity,
+                                        item.cartItemProduct.pricing.discount.mrp)}}</td>
+                                </tr>
+                                <tr class="cart-coupon-row">
+                                    <td colspan="6">
+                                        <div class="cart-coupon">
+                                            <input [formControl]="couponCode" type="text" name="cart-coupon"
+                                                placeholder="Coupon code">
+                                            <button (click)="handleAddCouponCode()" type="submit"
+                                                class="btn theme-btn-2 btn-effect-2 ms-3">Apply
+                                                Coupon</button>
+                                        </div>
+                                    </td>
+                                </tr>
+                            </tbody>
+                        </table>
+                    </div>
+                    <div class="shoping-cart-total mt-50">
+                        <div class="d-flex justify-content-center flex-column mx-2">
+                            <table>
+                                <tbody>
+                                    <tr>
+                                        <td>
+                                            <h4>Cart Totals: </h4>
+                                        </td>
+                                        <td class="text-end">
+                                            <h4 class="ms-4">₹{{cart.cartTotal}}</h4>
+                                        </td>
+                                    </tr>
+                                    <tr *ngIf="couponDiscount > 0">
+                                        <td>
+                                            <h4>Coupon Discount: </h4>
+                                        </td>
+                                        <td class="text-end">
+                                            <h4 class="ms-4">₹{{couponDiscount}}</h4>
+                                        </td>
+                                    </tr>
+                                    <tr *ngIf="couponDiscount > 0">
+                                        <td>
+                                            <h4>Sub Total: </h4>
+                                        </td>
+                                        <td class="text-end">
+                                            <h4 class="ms-4">₹{{cart.cartTotal - couponDiscount}}</h4>
+                                        </td>
+                                    </tr>
+                                </tbody>
+                            </table>
+                        </div>
+                        <div class="btn-wrapper text-right text-end">
+                            <a routerLink="/checkout" class="theme-btn-1 btn btn-effect-1">Proceed to checkout</a>
+                        </div>
+                    </div>
+                </div>
+                <div *ngIf="!isLoading && cart.cartItems.length === 0" class="shoping-cart-inner">
+                    <div class="d-flex flex-column justify-content-center align-items-center" style="min-height: 60vh;">
+                        <h2>Your Cart is Empty</h2>
+                        <div class="btn-wrapper ">
+                            <a routerLink="/shop" class="theme-btn-1 btn btn-effect-1">Shop Peas-fully</a>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>

@@ -1,0 +1,10 @@
+<div mat-dialog-content>
+    <h1>{{data.title}}</h1>
+    <p *ngFor="let msg of data.message">{{msg}}<br/></p>
+</div>
+
+<div mat-dialog-actions class="d-flex justify-content-center">
+    <button *ngIf="data.dangerButton" [mat-dialog-close]=true class="btn btn-danger cdk-focused px-3 py-2 m-2">{{data.dangerButton}}</button>
+    <button *ngIf="data.neutralButton" (click)="onCancelClick()" class="btn btn-secondary px-3 py-2 m-2">{{data.neutralButton}}</button>
+    <button *ngIf="data.successButton" [mat-dialog-close]=true class="btn btn-success cdk-focused px-3 py-2 m-2">{{data.successButton}}</button>
+</div>

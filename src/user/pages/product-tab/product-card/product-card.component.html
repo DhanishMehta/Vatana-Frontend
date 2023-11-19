@@ -1,0 +1,39 @@
+<div class="card text-center ltn__product-item-3" style="width: 18rem;">
+    <div class="image-container">
+        <img *ngIf="product.images?.length === 0" src="/assets/img/placeholder-image.png" class="card-img-top"
+            alt="...">
+        <img *ngIf="product.images?.length! > 0" [src]="product.images![0].m" class="card-img-top" alt="...">
+        <div class="product-hover-options">
+            <ul>
+                <li>
+                    <a href="#" title="Quick View" data-bs-toggle="modal" data-bs-target="#quick_view_modal"
+                        (click)="quickView()">
+                        <i class="far fa-eye"></i>
+                    </a>
+                </li>
+                <li>
+                    <a href="#" title="Add to Cart" data-bs-toggle="modal" data-bs-target="#add_to_cart_modal"
+                        (click)="addToCart()">
+                        <i class=" fas fa-shopping-cart"></i>
+                    </a>
+                </li>
+                <li>
+                    <a href="#" title="Wishlist" data-bs-toggle="modal" data-bs-target="#liton_wishlist_modal"
+                        (click)="addToWishlist()">
+                        <i class=" far fa-heart"></i></a>
+                </li>
+            </ul>
+        </div>
+    </div>
+    <div class="card-body">
+        <div class="product-ratting">
+            <app-review-display [rating]="product.rating_info.avg_rating"></app-review-display>
+        </div>
+        <h2 class="product-title text-nowrap text-truncate mw-100"><a [routerLink]="product.absolute_url"
+                class="">{{product.desc}}</a></h2>
+        <div class="product-price">
+            <span>₹{{product.pricing.discount.subscription_price}}</span>
+            <del>₹{{product.pricing.discount.mrp}}</del>
+        </div>
+    </div>
+</div>

@@ -1,0 +1,40 @@
+<div class="d-flex justify-content-center align-items-center" style="min-height: 90vh;">
+    <div class="col-md-7 col-lg-8">
+        <h4 class="mb-3">New User Details</h4>
+        <app-pre-loader *ngIf="isLoading"></app-pre-loader>
+        <form *ngIf="!isLoading" [formGroup]="addUserForm">
+            <div class="row g-3">
+                <div class="col-sm-6">
+                    <label for="firstName" class="form-label">First Name</label>
+                    <input [ngClass]="{'border-danger' : addUserForm.controls['userFirstName'].dirty && addUserForm.controls['userFirstName'].invalid}" formControlName="userFirstName" type="text" class="form-control" id="firstName" placeholder="" value="" required>
+                </div>
+
+                <div class="col-sm-6">
+                    <label for="lastName" class="form-label">Last Name</label>
+                    <input [ngClass]="{'border-danger' : addUserForm.controls['userLastName'].dirty && addUserForm.controls['userLastName'].invalid}" formControlName="userLastName" type="text" class="form-control" id="lastName" placeholder="" value="" required>
+                </div>
+
+                <div class="col-sm-6">
+                    <label for="userPhone" class="form-label">Phone Number</label>
+                    <input [ngClass]="{'border-danger' : addUserForm.controls['userPhone'].dirty && addUserForm.controls['userPhone'].invalid}" formControlName="userPhone" type="text" class="form-control" id="userPhone" placeholder="Phone Number" value="" required>
+                </div>
+
+                <div class="col-sm-6">
+                    <label for="userEmail" class="form-label">Email ID</label>
+                    <input [ngClass]="{'border-danger' : addUserForm.controls['userEmail'].dirty && addUserForm.controls['userEmail'].invalid}" formControlName="userEmail" type="email" class="form-control" id="userEmail" placeholder="Email ID" value="" required>
+                </div>
+
+                <div class="col-sm-6">
+                    <label for="userRole" class="form-label">User Role</label>
+                    <select [ngClass]="{'border-danger' : addUserForm.controls['userRole'].dirty && addUserForm.controls['userRole'].invalid}" formControlName="userRole" type="text" class="form-select" id="mlc" placeholder="" value="" required>
+                        <option *ngFor="let role of userRoles" [value]="role">{{role}}</option>
+                    </select>
+                </div>
+            </div>
+            <div class="mt-4">
+                <button class="btn btn-primary mx-2" (click)="handleSubmit()" [disabled]="addUserForm.invalid">Submit</button>
+                <button class="btn btn-secondary mx-2" (click)="handleCancel()">Cancel</button>
+            </div>
+        </form>
+    </div>
+</div>

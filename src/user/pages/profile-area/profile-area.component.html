@@ -1,0 +1,120 @@
+<div class="liton__wishlist-area pb-70">
+    <div class="container">
+        <div class="row">
+            <div class="col-lg-12">
+                <app-pre-loader *ngIf="isLoading"></app-pre-loader>
+                <!-- PRODUCT TAB AREA START -->
+                <div *ngIf="!isLoading" class="ltn__product-tab-area">
+                    <div class="container">
+                        <div class="row">
+                            <div class="col-lg-4">
+                                <div class="ltn__tab-menu-list mb-50">
+                                    <div class="nav">
+                                        <a class="active show" data-bs-toggle="tab" href="#liton_tab_1_1">Dashboard <i class="fas fa-home"></i></a>
+                                        <a data-bs-toggle="tab" href="#liton_tab_1_2">Orders <i class="fas fa-file-alt"></i></a>
+                                        <a data-bs-toggle="tab" href="#liton_tab_1_4">Address <i class="fas fa-map-marker-alt"></i></a>
+                                        <a data-bs-toggle="tab" href="#liton_tab_1_5">Account Details <i class="fas fa-user"></i></a>
+                                        <a (click)="handleLogout()">Logout <i class="fas fa-sign-out-alt"></i></a>
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="col-lg-8">
+                                <div class="tab-content">
+                                    <div class="tab-pane fade active show" id="liton_tab_1_1">
+                                        <div class="ltn__myaccount-tab-content-inner">
+                                            <p>Hello <strong>{{user.userFirstName}}</strong></p>
+                                            <p>From your account dashboard you can view your <span>recent orders</span>, manage your <span>shipping and billing addresses</span>, and <span>edit your account details</span>.</p>
+                                        </div>
+                                    </div>
+                                    <div class="tab-pane fade" id="liton_tab_1_2">
+                                        <div class="ltn__myaccount-tab-content-inner">
+                                            <div class="table-responsive border border-1 border-secondary-subtle">
+                                                <table class="table" *ngIf="orderList.length === 0">
+                                                    <thead>
+                                                        <tr>
+                                                            <th>No past orders found.</th>
+                                                        </tr>
+                                                    </thead>
+                                                </table>
+                                                <table class="table"  *ngIf="orderList.length > 0">
+                                                    <thead>
+                                                        <tr>
+                                                            <th>Order</th>
+                                                            <th>Order ID</th>
+                                                            <th>Items</th>
+                                                            <th>Address</th>
+                                                            <th>Total</th>
+                                                            <th>Invoice</th>
+                                                        </tr>
+                                                    </thead>
+                                                    <tbody style="max-height: 75vh; overflow-y: scroll;">
+                                                        <tr *ngFor="let order of orderList; index as i">
+                                                            <td>{{i}}</td>
+                                                            <td>{{order.orderId}}</td>
+                                                            <td>{{order.items.length}}</td>
+                                                            <td>{{order.address.addressLineOne}}</td>
+                                                            <td>{{order.pricing.grandTotal}}</td>
+                                                            <td><a style="cursor: pointer;" class="text-center link-primary-color" (click)="routeToOrder(order.orderId)">View</a></td>
+                                                        </tr>
+                                                    </tbody>
+                                                </table>
+                                            </div>
+                                        </div>
+                                    </div>
+
+                                    <div class="tab-pane fade" id="liton_tab_1_4">
+                                        <div class="ltn__myaccount-tab-content-inner">
+                                            <p class="d-flex justify-content-between">
+                                                The following addresses will be used on the checkout page by default.
+                                            </p>
+                                            <div class="row">
+                                                <div class="col-md-6 col-12 learts-mb-30">
+                                                    <address *ngFor="let address of user.userSavedAddresses">
+                                                        <p>{{address.addressLineOne}}</p>
+                                                        <p>{{address.addressLineTwo}}</p>
+                                                        <p>Pincode: {{address.addressPincode}}</p>
+                                                        <p>{{address.addressCity}}, {{address.addressCity}}</p>
+                                                    </address>
+                                                </div>
+                                            </div>
+                                        </div>
+                                    </div>
+                                    <div class="tab-pane fade" id="liton_tab_1_5">
+                                        <div class="ltn__myaccount-tab-content-inner">
+                                            <div class="ltn__form-box">
+                                                <form [formGroup]="editUserForm">
+                                                    <div class="row mb-50">
+                                                        <div class="col-md-6">
+                                                            <label>First name:</label>
+                                                            <input formControlName="firstName" type="text" name="ltn__name" [value]="user.userFirstName">
+                                                        </div>
+                                                        <div class="col-md-6">
+                                                            <label>Last name:</label>
+                                                            <input formControlName="lastName" type="text" name="ltn__lastname" [value]="user.userLastName">
+                                                        </div>
+                                                        <div class="col-md-6">
+                                                            <label>Email:</label>
+                                                            <input formControlName="email" type="email" name="ltn__lastname" [value]="user.userEmail">
+                                                        </div>
+                                                        <div class="col-md-6">
+                                                            <label>Phone Number</label>
+                                                            <input formControlName="phoneNo" type="text" name="ltn__lastname" [value]="user.userPhone">
+                                                        </div>
+                                                    </div>
+                                                    <div class="btn-wrapper">
+                                                        <button type="submit" class="btn theme-btn-1 btn-effect-1 text-uppercase" [disabled]="editUserForm.invalid" (click)="handleEditUser()">Save Changes</button>
+                                                    </div>
+                                                </form>
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                <!-- PRODUCT TAB AREA END -->
+            </div>
+        </div>
+    </div>
+</div>

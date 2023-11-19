@@ -1,0 +1,42 @@
+<div class="liton__wishlist-area mb-105">
+    <div class="container">
+        <div class="row">
+            <div class="col-lg-12">
+                <div class="shoping-cart-inner">
+                    <app-pre-loader *ngIf="isLoading"></app-pre-loader>
+                    <div *ngIf="!isLoading && wishlist.length > 0" class="shoping-cart-table table-responsive">
+                        <table class="table" style="table-layout: fixed;">
+                            <tbody>
+                                <tr *ngFor="let item of wishlist">
+                                    <td style="width: 5%;" class="cart-product-remove" (click)="removeFromWishList(item.id!)"><i class="bi bi-x fs-4"></i></td>
+                                    <td style="width: 15%;" class="cart-product-image">
+                                        <a [routerLink]="item.absolute_url">
+                                            <img *ngIf="item.images!.length == 0" src="/assets/img/placeholder-image.jpg" alt="#">
+                                            <img *ngIf="item.images!.length > 0"     [src]="item.images![0].s" alt="#">
+                                        </a>
+                                    </td>
+                                    <td style="width: 40%;" class="cart-product-info text-start">
+                                        <h4><a [routerLink]="item.absolute_url">{{item.desc}}</a></h4>
+                                    </td>
+                                    <td style="width: 15%;" class="cart-product-price">₹{{item.pricing.discount.mrp}}</td>
+                                    <td style="width: 25%;" class="cart-product-add-cart">
+                                        <button class="btn theme-btn-1 btn-effect-1" (click)="addToCart(item.id!)" title="Add to Cart" data-bs-toggle="modal" data-bs-target="#add_to_cart_modal">Add to Cart</button>
+                                    </td>
+                                </tr>
+                            </tbody>
+                        </table>
+                    </div>
+
+                    <div *ngIf="!isLoading && wishlist.length === 0" class="shoping-cart-inner">
+                        <div class="d-flex flex-column justify-content-center align-items-center" style="min-height: 60vh;">
+                            <h2>Your Wishlist is Empty</h2>
+                            <div class="btn-wrapper ">
+                                <a routerLink="/shop" class="theme-btn-1 btn btn-effect-1">Shop Peas-fully</a>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>

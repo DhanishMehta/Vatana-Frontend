@@ -1,0 +1,54 @@
+<div id="action-bar"
+    class="d-flex justify-content-between align-items-center py-2 mt-3 flex-lg-row flex-md-column flex-sm-column flex-column bg-light-subtle "
+    style="height: 6em;">
+    <div class="d-flex justify-content-center">
+        <a id="addUserButton" class="btn btn-primary fw-medium me-2 d-flex align-items-center" style="height: 50px;"
+            routerLink="new">
+            <i class="bi bi-plus fs-3 me-2"></i>
+            Add Product
+        </a>
+    </div>
+    <div class="d-flex align-items-center justify-content-center flex-row flex-xs-column align-items-sm-center">
+        <form [formGroup]="searchForm">
+            <input id="searchQuery" type="text" class="form-control" formControlName="searchQuery"
+                placeholder="Search products">
+        </form>
+    </div>
+</div>
+
+<app-pre-loader *ngIf="isLoading"></app-pre-loader>
+
+<div *ngIf="!isLoading" style="max-height: 69vh; min-height: 64vh; overflow: auto; margin-top: 3px;">
+    <table *ngIf="productList.length > 0" class="table table-striped table-hover w-100" style="table-layout:fixed;">
+        <thead style="top: 0; position: sticky; z-index: 1;">
+            <tr>
+                <th scope="col" *ngFor="let column of displayedColumns" class="text-center" [ngStyle]="{'width' : true ? column.width : ''}">{{column.name}}</th>
+            </tr>
+        </thead>
+        <tbody id="table-body">
+            <tr *ngFor="let product of productList" id="product-{{product.id}}">
+                <td><img style="mix-blend-mode: multiply; max-width: 40px;"
+                        [src]="product.images![0].s"></td>
+                <td style="vertical-align: middle;" class="text-truncate text-center">{{product.brand.name}}</td>
+                <td style="vertical-align: middle;" class="text-truncate">{{product.desc}}</td>
+                <td style="vertical-align: middle;" class="text-truncate text-center">{{product.category.tlc_name}}</td>
+                <td style="vertical-align: middle;" class="text-truncate text-center">Rs. {{product.pricing.discount.mrp}}</td>
+                <td style="vertical-align: middle;" class="text-truncate text-center">{{product.rating_info.avg_rating}}</td>
+                <td style="vertical-align: middle;" class="text-truncate text-end me-2">
+                    <span>
+                        <!-- <a routerLink="edit/{{product.id}}"><i class="bi bi-pencil mx-1 link-success"></i></a> -->
+                        <a (click)="handleDeleteProduct(product.id!)" style="cursor: pointer;"><i class="bi bi-trash mx-1 text-danger"></i></a>
+                    </span>
+                </td>
+            </tr>
+        </tbody>
+
+    </table>
+    <div *ngIf="productList.length === 0" class="d-flex justify-content-center align-items-center bg-body-secondary w-100" style="height: 64vh;">
+        <h3 class="text-center">No Result to display. Search something else</h3>
+    </div>
+</div>
+
+<mat-paginator *ngIf="productList.length > 0 && productListLength > 10" class="text-primary-color mt-0" [pageSizeOptions]="[10, 25, 50, 100]" [pageSize]="10"
+    (page)="handlePageEvent($event)" [length]="productListLength" aria-label="Select page"
+    showFirstLastButtons></mat-paginator>

@@ -1,0 +1,39 @@
+<div class="ltn__utilize-menu-inner ltn__scrollbar">
+    <div class="ltn__utilize-menu-head">
+        <span class="ltn__utilize-menu-title">Cart</span>
+        <button class="ltn__utilize-close">×</button>
+    </div>
+    <div *ngIf="displayCart" class="mini-cart-product-area ltn__scrollbar">
+        <div *ngFor="let item of cart.cartItems" class="mini-cart-item clearfix">
+            <div class="mini-cart-img">
+                <a routerLink="#">
+                    <img *ngIf="item.cartItemProduct.images!.length == 0" src="/assets/img/placeholder-image.jpg" alt="Image">
+                    <img *ngIf="item.cartItemProduct.images!.length > 0" [src]="item.cartItemProduct.images![0].m" alt="Image">
+                </a>
+                <span class="mini-cart-item-delete"><i class="icon-cancel" (click)="deleteFromCart(item.cartItemProduct.id!)"></i></span>
+            </div>
+            <div class="mini-cart-info">
+                <h6><a [routerLink]="item.cartItemProduct.absolute_url">{{item.cartItemProduct.desc}}</a></h6>
+                <span class="mini-cart-quantity">{{item.cartItemQuantity}} x ₹{{item.cartItemProduct.pricing.discount.mrp}}</span>
+            </div>
+        </div>
+    </div>
+    <div *ngIf="displayCart" class="mini-cart-footer">
+        <div class="mini-cart-sub-total">
+            <h5>Subtotal: <span>₹{{cart.cartTotal}}</span></h5>
+        </div>
+        <div class="btn-wrapper d-flex justify-content-center">
+            <!-- <a routerLink="/cart" class="theme-btn-1 btn btn-effect-1">View Cart</a> -->
+            <a routerLink="/cart" class="theme-btn-1 btn btn-effect-1">View Cart</a>
+            <a routerLink="/checkout" class="theme-btn-2 btn btn-effect-2">Checkout</a>
+        </div>
+        <p>Free Shipping on All Orders Over ₹1000!</p>
+    </div>
+    <div *ngIf="!displayCart" class="mini-cart-footer">
+        <div class="btn-wrapper">
+            <a class="ltn__utilize-close theme-btn-1 btn btn-effect-1">Add Items to Cart</a>
+        </div>
+        <p>Free Shipping on All Orders Over ₹1000!</p>
+    </div>
+
+</div>

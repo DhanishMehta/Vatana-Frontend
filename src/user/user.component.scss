@@ -1,0 +1,23 @@
+// .ltn__scrollbar {
+//   overflow-y: auto;
+// }
+
+// .ltn__scrollbar::-webkit-scrollbar {
+//   width: 2px;
+//   background-color: #f5f5f5;
+//   border-radius: 30px;
+// }
+
+// .ltn__scrollbar::-webkit-scrollbar-thumb {
+//   background-color: #ddd;
+// }
+
+::-webkit-scrollbar {
+  width: 7px;
+  background-color: var(--ltn__secondary-color);
+  border-radius: 30px;
+}
+
+::-webkit-scrollbar-thumb {
+  background-color: var(--ltn__secondary-color);
+}

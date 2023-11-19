@@ -1,0 +1,24 @@
+/* You can add global styles to this file, and also import other style files */
+
+html,
+body {
+  height: 100%;
+}
+body {
+  margin: 0;
+  font-family: Roboto, "Helvetica Neue", sans-serif;
+}
+
+.section-title {
+  font-family: Rajdhani !important;
+}
+
+// ::-webkit-scrollbar {
+//   width: 7px;
+//   background-color: var(--ltn__secondary-color);
+//   border-radius: 30px;
+// }
+
+// ::-webkit-scrollbar-thumb {
+//   background-color: var(--ltn__secondary-color);
+// }

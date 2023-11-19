@@ -1,0 +1,212 @@
+<app-pre-loader *ngIf="isLoading"></app-pre-loader>
+
+<!-- SHOP DETAILS AREA START -->
+<div *ngIf="!isLoading" class="ltn__shop-details-area pb-85">
+    <div class="container">
+        <div class="row">
+            <div class="col-lg-12">
+                <div class="ltn__shop-details-inner mb-60">
+                    <div class="row">
+                        <div class="col-md-6">
+                            <div class="ltn__shop-details-img-gallery">
+                                <div *ngIf="product.images!.length === 0" class="ltn__shop-details-large-img">
+                                    <div class="single-large-img">
+                                        <a style="cursor: pointer;" data-rel="lightcase:myCollection">
+                                            <img src="/assets/img/placeholder-image.jpg" alt="Image">
+                                        </a>
+                                    </div>
+
+                                </div>
+                                <div *ngIf="product.images!.length > 0" class="ltn__shop-details-large-img">
+                                    <div *ngFor="let img of product.images" class="single-large-img">
+                                        <a style="cursor: pointer;" data-rel="lightcase:myCollection">
+                                            <img *ngIf="product.images!.length > 0" [src]="img.m" alt="Image">
+                                        </a>
+                                    </div>
+                                </div>
+                                <div *ngIf="product.images!.length === 0"
+                                    class="ltn__shop-details-small-img slick-arrow-2">
+                                    <div class="single-small-img">
+                                        <img src="/assets/img/placeholder-image.jpg" alt="Image">
+                                    </div>
+
+                                </div>
+                                <div *ngIf="product.images!.length > 0"
+                                    class="ltn__shop-details-small-img slick-arrow-2">
+                                    <div *ngFor="let img of product.images" class="single-small-img">
+                                        <img *ngIf="product.images!.length > 0" [src]="img.s" alt="Image">
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="col-md-6">
+                            <div class="modal-product-info shop-details-info pl-0">
+                                <div class="product-ratting">
+                                    <ul>
+                                        <li><a href="#"><i class="fas fa-star"></i></a></li>
+                                        <li><a href="#"><i class="fas fa-star"></i></a></li>
+                                        <li><a href="#"><i class="fas fa-star"></i></a></li>
+                                        <li><a href="#"><i class="fas fa-star-half-alt"></i></a></li>
+                                        <li><a href="#"><i class="far fa-star"></i></a></li>
+                                        <li class="review-total"> <a href="#"> ( 95 Reviews )</a></li>
+                                    </ul>
+                                </div>
+                                <h3>{{product.desc}}</h3>
+                                <div class="product-price">
+                                    <span>₹{{product.pricing.discount.subscription_price}}</span>
+                                <del>₹{{product.pricing.discount.mrp}}</del>
+                                </div>
+                                <div class="modal-product-meta ltn__product-details-menu-1">
+                                    <ul>
+                                        <li>
+                                            <strong>Categories:</strong>
+                                            <span>
+                                                <a style="cursor: pointer;">{{product.category.tlc_name}}</a>
+                                                <a style="cursor: pointer;">{{product.category.mlc_name}}</a>
+                                                <a style="cursor: pointer;">{{product.category.llc_name}}</a>
+                                            </span>
+                                        </li>
+                                    </ul>
+                                </div>
+                                <div class="ltn__product-details-menu-2">
+                                    <ul>
+                                        <li>
+                                            <a (click)="addToCart()" href="#" class="theme-btn-1 btn btn-effect-1" title="Add to Cart"
+                                                data-bs-toggle="modal" data-bs-target="#add_to_cart_modal">
+                                                <i class="fas fa-shopping-cart"></i>
+                                                <span>ADD TO CART</span>
+                                            </a>
+                                        </li>
+                                    </ul>
+                                </div>
+                                <div class="ltn__product-details-menu-3">
+                                    <ul>
+                                        <li>
+                                            <a (click)="addToWishlist()" href="#" class="" title="Wishlist" data-bs-toggle="modal"
+                                                data-bs-target="#liton_wishlist_modal">
+                                                <i class="far fa-heart"></i>
+                                                <span>Add to Wishlist</span>
+                                            </a>
+                                        </li>
+                                    </ul>
+                                </div>
+                                <hr>
+                                <div class="ltn__social-media">
+                                    <ul>
+                                        <li>Share:</li>
+                                        <li><a href="#" title="Facebook"><i class="fab fa-facebook-f"></i></a></li>
+                                        <li><a href="#" title="Twitter"><i class="fab fa-twitter"></i></a></li>
+                                        <li><a href="#" title="Linkedin"><i class="fab fa-linkedin"></i></a></li>
+                                        <li><a href="#" title="Instagram"><i class="fab fa-instagram"></i></a></li>
+
+                                    </ul>
+                                </div>
+                                <hr>
+                                <div class="ltn__safe-checkout">
+                                    <h5>Guaranteed Safe Checkout</h5>
+                                    <img src="/assets/img/icons/payment-2.png" alt="Payment Image">
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                <!-- Shop Tab Start -->
+                <div class="ltn__shop-details-tab-inner ltn__shop-details-tab-inner-2">
+                    <div class="ltn__shop-details-tab-menu">
+                        <div class="nav">
+                            <a class="active show" data-bs-toggle="tab" href="#liton_tab_details_1_1">Description</a>
+                            <a data-bs-toggle="tab" href="#liton_tab_details_1_2" class="">Reviews</a>
+                        </div>
+                    </div>
+                    <div class="tab-content">
+                        <div class="tab-pane fade active show" id="liton_tab_details_1_1">
+                            <div class="ltn__shop-details-tab-content-inner">
+                                <h4 class="title-2">Product Description / USP</h4>
+                                <p>{{product.usp}}</p>
+                            </div>
+                        </div>
+                        <div class="tab-pane fade" id="liton_tab_details_1_2">
+                            <div class="ltn__shop-details-tab-content-inner">
+                                <h4 class="title-2">Customer Reviews</h4>
+                                <div class="product-ratting">
+                                    <app-review-display [rating]="averageRating"></app-review-display>
+                                    <li class="review-total"> <a style="cursor: pointer;"> ( {{reviewsList.length}} Reviews )</a></li>
+                                </div>
+                                <hr>
+                                <!-- comment-area -->
+                                <div class="ltn__comment-area mb-30">
+                                    <div class="ltn__comment-inner">
+                                        <ul>
+                                            <li *ngFor="let review of reviewsList">
+                                                <div class="ltn__comment-item clearfix">
+                                                    <div class="ltn__commenter-comment">
+                                                        <h6><a>{{review.userName}}</a></h6>
+                                                        <div class="product-ratting">
+                                                            <app-review-display [rating]="review.reviewRating.toString()"></app-review-display>
+                                                        </div>
+                                                        <h5>{{review.reviewTitle}}</h5>
+                                                        <p>{{review.reviewMessage}}</p>
+                                                        <span class="ltn__comment-reply-btn">{{review.reviewTime.toDateString}}</span>
+                                                    </div>
+                                                </div>
+                                            </li>
+                                        </ul>
+                                    </div>
+                                </div>
+                                <!-- comment-reply -->
+                                <div class="ltn__comment-reply-area ltn__form-box mb-30">
+                                    <form [formGroup]="reviewForm">
+                                        <h4 class="title-2">Add a Review</h4>
+                                        <div class="mb-30">
+                                            <div class="add-a-revie">
+                                                <!-- <h6>Your Ratings (1 - 5)</h6> -->
+                                                <app-rating-form (rating)="getRating($event)"></app-rating-form>
+                                                <!-- <input type="text" formControlName="rating"> -->
+                                            </div>
+                                        </div>
+                                        <div class="input-item input-item-name ltn__custom-icon">
+                                            <input type="text" placeholder="Type your title...." formControlName="title">
+                                        </div>
+                                        <div class="input-item input-item-textarea ltn__custom-icon">
+                                            <textarea formControlName="message" placeholder="Type your comments...."></textarea>
+                                        </div>
+                                        <div class="input-item input-item-name ltn__custom-icon">
+                                            <input type="text" placeholder="Enter your name...." formControlName="name">
+                                        </div>
+                                        <div class="btn-wrapper">
+                                            <button class="btn theme-btn-1 btn-effect-1 text-uppercase"
+                                                type="submit" (click)="handleAddReviews()">Submit</button>
+                                        </div>
+                                    </form>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                <!-- Shop Tab End -->
+            </div>
+        </div>
+    </div>
+</div>
+<!-- SHOP DETAILS AREA END -->
+
+<!-- PRODUCT SLIDER AREA START -->
+<div *ngIf="!isLoading" class="ltn__product-slider-area ltn__product-gutter pb-70">
+    <div class="container">
+        <div class="row">
+            <div class="col-lg-12">
+                <div class="section-title-area ltn__section-title-2">
+                    <h6 class="section-subtitle ltn__secondary-color">// {{product.category.tlc_name}}</h6>
+                    <h1 class="section-title">Related Products<span>.</span></h1>
+                </div>
+            </div>
+        </div>
+        <div class="row ltn__related-product-slider-one-active slick-arrow-1">
+            <!-- ltn__product-item -->
+            <div class="d-flex gap-3 overflow-x-scroll py-3 overflow-y-hidden">
+                <product-card *ngFor="let product of relatedProducts" [product]="product"></product-card>
+            </div>
+        </div>
+    </div>
+</div>
+<!-- PRODUCT SLIDER AREA END -->

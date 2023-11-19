@@ -1,0 +1,39 @@
+.form-signin {
+    max-width: 330px;
+    padding: 1rem;
+  }
+  
+  .form-signin .form-floating:focus-within {
+    z-index: 2;
+  }
+  
+  .form-signin input[formControlName="userFirstName"] {
+    margin-bottom: -1px;
+    border-bottom-left-radius: 0;
+    border-bottom-right-radius: 0;
+  }
+  .form-signin input[formControlName="userLastName"] {
+    margin-bottom: -1px;
+    border-radius: 0;
+  }
+  .form-signin input[formControlName="userPhone"] {
+    margin-bottom: -1px;
+    border-radius: 0;
+  }
+  .form-signin input[formControlName="userEmail"] {
+    margin-bottom: -1px;
+    border-radius: 0;
+  }
+  
+  .form-signin input[formControlName="userPassword"] {
+    // margin-bottom: 10px;
+    // border-top-left-radius: 0;
+    // border-top-right-radius: 0;
+  }
+  
+  .password{
+    margin-bottom: 10px;
+    border-top-left-radius: 0;
+    border-top-right-radius: 0;
+
+  }

@@ -1,0 +1,70 @@
+<div class="d-flex justify-content-center align-items-center" style="min-height: 90vh;">
+    <div class="col-md-7 col-lg-8">
+        <h4 class="mb-3">New Product Details</h4>
+        <form [formGroup]="addProductForm">
+            <div class="row g-3">
+                <div class="col-sm-6">
+                    <label for="product-name" class="form-label">Product Name/Desc</label>
+                    <input formControlName="productName" type="text" class="form-control" id="product-name" placeholder="" value="" required>
+                </div>
+
+                <div class="col-sm-6">
+                    <label for="brand-name" class="form-label">Brand Name</label>
+                    <input formControlName="brandName" type="text" class="form-control" id="brand-name" placeholder="" value="" required>
+                </div>
+
+                <div class="col-sm-4">
+                    <label for="tlc" class="form-label">Top Level Category</label>
+                    <select formControlName="tlc" type="text" class="form-select" id="tlc" placeholder="Top Level Category" value="" required>
+                        <option *ngFor="let child of topCategoryTree" [value]="child.id">{{child.name}}</option>
+                    </select>
+                </div>
+
+                <div class="col-sm-4">
+                    <label for="mlc" class="form-label">Mid Level Category</label>
+                    <select formControlName="mlc" type="text" class="form-select" id="mlc" placeholder="" value="" required>
+                        <option *ngFor="let child of midCategoryTree" [value]="child.id">{{child.name}}</option>
+                    </select>
+                </div>
+
+                <div class="col-sm-4">
+                    <label for="llc" class="form-label">Low Level Category</label>
+                    <select formControlName="llc" type="text" class="form-select" id="llc" placeholder="" value="" required>
+                        <option *ngFor="let child of lowCategoryTree" [value]="child.id">{{child.name}}</option>
+                    </select>
+                </div>
+
+                <div class="col-6">
+                    <label for="price" class="form-label">Price</label>
+                    <div class="input-group has-validation">
+                        <span class="input-group-text">Rs.</span>
+                        <input formControlName="price" type="text" class="form-control" id="price" placeholder="Price in Rupees" required>
+                    </div>
+                </div>
+                
+                <div class="col-6">
+                    <label for="weight" class="form-label">Weight</label>
+                    <div class="input-group has-validation">
+                        <span class="input-group-text">gms</span>
+                        <input formControlName="weight" type="text" class="form-control" id="weight" placeholder="Weight in grams" required>
+                    </div>
+                </div>
+
+                <div class="col-12">
+                    <label for="usp" class="form-label">USP</label>
+                    <input formControlName="productUsp" type="email" class="form-control" id="usp" placeholder="Unique Selling Point">
+                </div>
+
+                <div class="col-12">
+                    <label for="imageURL" class="form-label">Image URL</label>
+                    <input formControlName="imageURL" type="email" class="form-control" id="imageURL" placeholder="URL of hosted image of product">
+                </div>
+
+            </div>
+            <div class="mt-4">
+                <button class="btn btn-primary mx-2" (click)="handleSubmit()" [disabled]="addProductForm.invalid">Submit</button>
+                <button class="btn btn-secondary mx-2" (click)="handleCancel()">Cancel</button>
+            </div>
+        </form>
+    </div>
+</div>

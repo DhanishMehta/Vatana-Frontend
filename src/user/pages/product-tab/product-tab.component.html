@@ -1,0 +1,110 @@
+<div class="ltn__product-tab-area ltn__product-gutter pt-85 pb-70">
+    <div class="container">
+        <div class="row">
+            <div [ngClass]="[productTabViewOptions.filterOptions ? 'col-lg-8' : 'col-lg-12']">
+                <div *ngIf="productTabViewOptions.sectionTitle"
+                    class="section-title-area ltn__section-title-2 text-center">
+                    <h1 class="section-title">Our Products</h1>
+                </div>
+                <div *ngIf="productTabViewOptions.sectionTitle"
+                    class="ltn__tab-menu ltn__tab-menu-2 ltn__tab-menu-top-right-- text-uppercase text-center">
+                    <div class="nav">
+                        <a *ngFor="let category of categoryList" class="show"
+                            (click)="handleCategoryChange(category.id)"
+                            [ngClass]="[selectedCategory===category.id ? 'active' : '']" style="cursor: pointer;">
+                            {{category.name}}
+                        </a>
+                    </div>
+                </div>
+                <div *ngIf="productTabViewOptions.shopOptions" class="ltn__shop-options">
+                    <ul>
+                        <li>
+                            <div class="ltn__grid-list-tab-menu ">
+                                <div class="nav">
+                                    <a class="active show" data-bs-toggle="tab" href="#liton_product_grid"><i
+                                            class="fas fa-th-large"></i></a>
+                                </div>
+                            </div>
+                        </li>
+                        <li>
+                            <div class="showing-product-number text-right text-end">
+                                <span>{{paginatorShowingString}}</span>
+                            </div>
+                        </li>
+                        <li>
+                            <div class="short-by text-center">
+                                <form [formGroup]="filterForm">
+                                    <select formControlName="sortBy" class="nice-select">
+                                        <option value="">Default Sorting</option>
+                                        <option value="rating-lth">Sort by rating: low to high</option>
+                                        <option value="rating-htl">Sort by rating: high to low</option>
+                                        <option value="price-lth">Sort by price: low to high</option>
+                                        <option value="price-htl">Sort by price: high to low</option>
+                                    </select>
+                                </form>
+                            </div>
+                        </li>
+                    </ul>
+                </div>
+                <app-pre-loader *ngIf="isLoading"></app-pre-loader>
+                <div class="tab-content" *ngIf="!isLoading">
+                    <div class="tab-pane fade active show" id="liton_tab_3_1">
+                        <div class="ltn__product-tab-content-inner">
+                            <div
+                                class="d-flex flex-wrap gap-5 justify-content-center ltn__tab-product-slider-one-active slick-arrow-1 d-flex">
+                                <product-card *ngFor="let product of productsList" [product]="product"
+                                    (eventEmitter)="changeSelected(product)"></product-card>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                <div *ngIf="productTabViewOptions.pagination" class="ltn__pagination-area text-center">
+                    <div class="ltn__pagination">
+                        <ul>
+                            <li><a href="#"><i class="fas fa-angle-double-left"></i></a></li>
+                            <li><a href="#">1</a></li>
+                            <li class="active"><a href="#">2</a></li>
+                            <li><a href="#">3</a></li>
+                            <li><a href="#">...</a></li>
+                            <li><a href="#">10</a></li>
+                            <li><a href="#"><i class="fas fa-angle-double-right"></i></a></li>
+                        </ul>
+                    </div>
+                </div>
+            </div>
+            <div *ngIf="productTabViewOptions.filterOptions" class="col-lg-4">
+                <aside class="sidebar ltn__shop-sidebar ltn__right-sidebar">
+                    <!-- Search Widget -->
+                    <div class="widget ltn__search-widget">
+                        <h4 class="ltn__widget-title ltn__widget-title-border">Search Products</h4>
+                        <form [formGroup]="searchForm">
+                            <input formControlName="searchQuery" type="text" placeholder="Search your keyword...">
+                            <button type="submit" (click)="handleSearchQuery()"><i class="fas fa-search"></i></button>
+                        </form>
+                    </div>
+                    <!-- Category Widget -->
+                    <div class="widget ltn__menu-widget">
+                        <h4 class="ltn__widget-title ltn__widget-title-border">Product categories</h4>
+                        <ul class="category-widget-list">
+                            <li *ngFor="let category of categoryList"
+                                [ngClass]="[category.id === selectedCategory ? 'active' : '']">
+                                <a style="cursor: pointer; font-weight: light !important;"
+                                    (click)="handleCategoryChange(category.id)">
+                                    {{category.name}}
+                                    <span><i class="fas fa-long-arrow-alt-right"></i></span>
+                                </a>
+                            </li>
+                        </ul>
+                    </div>
+
+                    <!-- Banner Widget -->
+                    <div class="widget ltn__banner-widget">
+                        <a style="cursor: pointer;"><img src="/assets/img/banner/banner-2.jpg" alt="#"></a>
+                    </div>
+
+                </aside>
+            </div>
+        </div>
+    </div>
+</div>
+<user-modal [product]="selectedProduct"></user-modal>

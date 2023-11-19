@@ -1,0 +1,15 @@
+<div class="body-wrapper ltn__scrollbar">
+    <user-header class="ltn__header-area ltn__header-5 ltn__header-transparent gradient-color-2"></user-header>
+    <!-- <user-cart-menu class="ltn__utilize-cart-menu" ></user-cart-menu>   -->
+    <user-mobile-menu ></user-mobile-menu>
+    <div class="ltn__utilize-overlay"></div>
+    <user-slider-area *ngIf="isHomePage()"></user-slider-area>
+    <user-banner-area *ngIf="isHomePage()"></user-banner-area>
+    <user-bread-crumb-area *ngIf="!isHomePage()"></user-bread-crumb-area>
+
+    <router-outlet></router-outlet>
+    
+    <user-feature-area></user-feature-area>
+    <user-footer-area></user-footer-area>
+    <user-modal></user-modal>
+</div>

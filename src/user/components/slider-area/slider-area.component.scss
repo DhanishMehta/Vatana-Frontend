@@ -1,0 +1,16 @@
+.primary-font-color {
+  color: var(--ltn__secondary-color);
+}
+
+.carousel-control-next-icon, .carousel-control-prev-icon {
+    filter: invert(81%) sepia(36%) saturate(6934%) hue-rotate(36deg) brightness(92%) contrast(101%) !important;
+}
+
+// .carousel-item-self{
+//   display: flex;
+
+// }
+
+// @media screen and (max-width: 768px) {
+  
+// }
