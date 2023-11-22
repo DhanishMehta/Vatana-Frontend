@@ -18,7 +18,6 @@ export class BreadCrumbAreaComponent implements OnInit, OnDestroy {
     const sub = this.router.events.subscribe({
       next: (val) => {
         if (val instanceof NavigationEnd === false) {
-          console.error(val);
           this.getPage();
         }
       },
@@ -31,12 +30,15 @@ export class BreadCrumbAreaComponent implements OnInit, OnDestroy {
     this.subscriptions.forEach((sub) => sub.unsubscribe());
   }
 
-  getPage() {
+  /**
+   * @function getPage: function to get the title of the current page for Breadcrumb
+   */
+  getPage(): void {
     let path = window.location.pathname.slice(1) + '/';
     path = path.toLowerCase();
     const index = path.indexOf('/');
     path = path.slice(0, 1).toUpperCase() + path.slice(1, index);
     this.activePage = path;
-    if (this.activePage == 'Pd') this.activePage = 'Product';
+    if (this.activePage === 'Pd') this.activePage = 'Product';
   }
 }

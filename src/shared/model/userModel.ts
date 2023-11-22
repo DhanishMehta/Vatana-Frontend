@@ -1,4 +1,3 @@
-import { InteractivityChecker } from "@angular/cdk/a11y";
 import { Product } from "./productModel";
 import { Order } from "./orderModel";
 

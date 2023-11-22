@@ -41,10 +41,10 @@ export class QuickViewModalComponent implements OnInit, OnDestroy {
   }
 
   addToCart() {
-    this.cartService.addToCart(this.product.id!);
+    this.cartService.addToCart(this.product.id);
   }
 
   addToWishlist() {
-    this.wishlistService.addToWishlist(this.product.id!);
+    this.wishlistService.addToWishlist(this.product.id);
   }
 }

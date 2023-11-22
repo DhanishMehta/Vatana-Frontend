@@ -1,0 +1,9 @@
+<div class="ltn__pagination-area text-center">
+    <div class="ltn__pagination">
+        <ul>
+            <li><a (click)="goToFirst()"><i class="fas fa-angle-double-left"></i></a></li>
+            <li [ngClass]="{'active': selectedPage === i }" *ngFor="let page of pageArray; index as i"><a (click)="updatePage(i)">{{i+1}}</a></li>
+            <li><a (click)="goToLast()"><i class="fas fa-angle-double-right"></i></a></li>
+        </ul>
+    </div>
+</div>

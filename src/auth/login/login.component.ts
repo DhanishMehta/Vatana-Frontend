@@ -32,16 +32,25 @@ export class AuthLoginComponent implements OnInit, OnDestroy {
     this.subscriptions.forEach((sub) => sub.unsubscribe());
   }
 
+  /**
+   * @function ifUserLoggedIn: navigates to Home if user is logged in
+   */
   ifUserLoggedIn() {
     this.snackbar.open('User already logged in!!', 'Great');
     this.router.navigate(['/']);
   }
-
+  
+  /**
+   * @function ifUserLoggedOut: performs actions if user is logged out
+   */
   ifUserLoggedOut() {
     this.initForm();
     this.getAllUsernames();
   }
 
+  /**
+   * @function initForm: function to initialize forms
+   */
   initForm() {
     this.loginForm = this.fb.group({
       userEmail: this.fb.control('', [Validators.required, Validators.email]),
@@ -49,6 +58,9 @@ export class AuthLoginComponent implements OnInit, OnDestroy {
     });
   }
 
+  /**
+   * @function getAllUsernames: function to get all usernames
+   */
   getAllUsernames() {
     const sub = this.authService.getAllUsernames().subscribe({
       next: (res) => {
@@ -62,12 +74,20 @@ export class AuthLoginComponent implements OnInit, OnDestroy {
     this.subscriptions.push(sub);
   }
 
-  isEmailUnique() {
+  /**
+   * @function isEmailUnique: function to check if the entered email is unique or not
+   * @returns 
+   */
+  isEmailUnique(): boolean {
     const newEmail = this.loginForm.controls['userEmail'].value;
     if (this.usernames.includes(newEmail)) return false;
     else return true;
   }
 
+  /**
+   * @function buildAuthReq: function to transform and the form values to authentication request
+   * @returns 
+   */
   buildAuthReq() {
     const formValue = this.loginForm.value;
     const authDetails: AuthenticationRequest = {
@@ -77,6 +97,10 @@ export class AuthLoginComponent implements OnInit, OnDestroy {
     return authDetails;
   }
 
+  /**
+   * @function handleLogin: function to handle login
+   * @returns 
+   */
   handleLogin() {
     if (this.loginForm.valid) {
       this.submissionTried++;
@@ -92,7 +116,7 @@ export class AuthLoginComponent implements OnInit, OnDestroy {
             action = 'Yayy!';
             this.authService.setRole(res.data.data.userRole);
             this.authService.setToken(res.data.token);
-            this.authService.setUserId(res.data.data.userId!);
+            this.authService.setUserId(res.data.data.userId);
             // this.snackbar.open(message, action, {
             //   duration: 2000
             // });

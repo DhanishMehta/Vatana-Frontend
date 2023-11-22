@@ -15,7 +15,7 @@
                                         <div style="width: 50px; height: 50px;">
                                             <a [routerLink]="item.cartItemProduct.absolute_url">
                                                 <img style="max-width: 50px; height: auto;"
-                                                    *ngIf="item.cartItemProduct.images!.length == 0"
+                                                    *ngIf="item.cartItemProduct.images.length === 0"
                                                     src="/assets/img/placeholder-image.jpg" alt="#">
                                             </a>
                                             <a [routerLink]="item.cartItemProduct.absolute_url">
@@ -36,10 +36,10 @@
                                         <div
                                             class="d-flex justify-content-around align-items-center border border-secondary-subtle border-1">
                                             <i class="me-2 bi bi-dash fs-4"
-                                                (click)="deleteFromCart(item.cartItemProduct.id!)"></i>
+                                                (click)="deleteFromCart(item.cartItemProduct.id)"></i>
                                             <span>{{item.cartItemQuantity}}</span>
                                             <i class="ms-2 bi bi-plus fs-4"
-                                                (click)="addToCart(item.cartItemProduct.id!)"></i>
+                                                (click)="addToCart(item.cartItemProduct.id)"></i>
                                         </div>
                                     </td>
                                     <td style="vertical-align: middle;" class="cart-product-subtotal">

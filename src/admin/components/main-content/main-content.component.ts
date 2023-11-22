@@ -47,6 +47,7 @@ export class MainContentComponent implements OnInit, OnDestroy {
         this.isLoading = this.isLoading1 || this.isLoading2 || this.isLoading3;
       },
     });
+    this.subscriptions.push(sub2);
     
     const sub3 = this.orderService.getAllOrders().subscribe({
       next: (res) => {
@@ -56,19 +57,26 @@ export class MainContentComponent implements OnInit, OnDestroy {
         this.isLoading = this.isLoading1 || this.isLoading2 || this.isLoading3;
       }
     })
-    this.subscriptions.push(sub2);
+    this.subscriptions.push(sub3);
   }
 
   ngOnDestroy(): void {
       this.subscriptions.forEach(sub => sub.unsubscribe());
   }
 
-  calculateTotalEarnings(orderList: Order[]){
+  /**
+   * @function calculateTotalEarnings: function to calculate total earnings
+   * @param orderList 
+   */
+  calculateTotalEarnings(orderList: Order[]): void{
     orderList.forEach(order => {
       this.totalEarnings += order.pricing.grandTotal;
     })
   }
 
+  /**
+   * @function populateAdminCards: function to populate admin cards
+   */
   populateAdminCards() {
     this.adminCard = [
       {

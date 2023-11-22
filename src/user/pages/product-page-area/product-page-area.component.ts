@@ -49,7 +49,10 @@ export class ProductPageAreaComponent implements OnInit, OnDestroy {
     this.subscriptions.forEach((sub) => sub.unsubscribe());
   }
 
-  initForm() {
+  /**
+   * @function initForm: function to initialize forms
+   */
+  initForm(): void {
     this.reviewForm = this.fb.group({
       title: this.fb.control('', [
         Validators.required,
@@ -69,7 +72,10 @@ export class ProductPageAreaComponent implements OnInit, OnDestroy {
     });
   }
 
-  populateProduct() {
+  /**
+   * @function populateProduct: function to get the product details
+   */
+  populateProduct(): void {
     const sub = this.activeRoute.params.subscribe({
       next: (param) => {
         this.productService.getProductById(param['productId']).subscribe({
@@ -84,7 +90,10 @@ export class ProductPageAreaComponent implements OnInit, OnDestroy {
     this.subscriptions.push(sub);
   }
 
-  getRelatedProducts() {
+  /**
+   * @function getRelatedProducts: function to get the products of the same top level category as of the current product
+   */
+  getRelatedProducts(): void {
     const sub = this.productService
       .getPaginatedProducts('', 1, 10, this.product.category.tlc_slug, '')
       .subscribe({
@@ -96,15 +105,24 @@ export class ProductPageAreaComponent implements OnInit, OnDestroy {
     this.subscriptions.push(sub);
   }
 
-  addToCart() {
-    this.cartService.addToCart(this.product.id!);
+  /**
+   * @function addToCart: function to add the product to the cart
+   */
+  addToCart(): void {
+    this.cartService.addToCart(this.product.id);
   }
 
-  addToWishlist() {
-    this.wishlistService.addToWishlist(this.product.id!);
+  /**
+   * @function addToWishlist: function to add the product to the wishlist
+   */
+  addToWishlist(): void {
+    this.wishlistService.addToWishlist(this.product.id);
   }
 
-  getReviews() {  
+  /**
+   * @function getReviews: function to get all the reviews of the current product
+   */
+  getReviews(): void {  
     const sub = this.reviewService.getReviewByProductId(this.product.id).subscribe({
       next: (res) => {
         this.reviewsList = res.data;
@@ -116,9 +134,12 @@ export class ProductPageAreaComponent implements OnInit, OnDestroy {
     this.subscriptions.push(sub);
   }
 
+  /**
+   * @function handleAddReviews: function to handle addition of new reviews for the current product
+   */
   handleAddReviews() {
     const formValue = this.reviewForm.value;
-    let newReview: Review = {
+    const newReview: Review = {
       productId: this.product.id,
       userId: this.authService.getUserId(),
       userName: formValue.name,
@@ -147,11 +168,18 @@ export class ProductPageAreaComponent implements OnInit, OnDestroy {
     });
   }
 
-  getRating(val) {
+  /**
+   * @function getRating: function to get the Rating of the current product
+   * @param val 
+   */
+  getRating(val): void {
     this.newRating = Number(val);
   }
 
-  getAverageRating() {
+  /**
+   * @function getAverageRating: function to get the average rating of the current product
+   */
+  getAverageRating(): void {
     let sum = 0;
     this.reviewsList.forEach(review => {
       sum += review.reviewRating;

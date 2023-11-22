@@ -10,7 +10,7 @@ export const isLoggedIn = () => {
   } else {
     router.navigate(['/auth']);
     return false;
-  };
+  }
 };
 
 export const isAdmin = () => {

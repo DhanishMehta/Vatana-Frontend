@@ -2,7 +2,7 @@ import { Component, OnInit, OnDestroy } from '@angular/core';
 import { FormBuilder, FormGroup, Validators } from '@angular/forms';
 import { MatSnackBar } from '@angular/material/snack-bar';
 import { Router } from '@angular/router';
-import { CategoryOfTree, Image, Product } from 'src/shared/model/productModel';
+import { CategoryOfTree, Product } from 'src/shared/model/productModel';
 import { ProductService } from 'src/shared/services/product/product.service';
 import {Subscription} from 'rxjs';
 
@@ -31,7 +31,7 @@ export class AddProductComponent implements OnInit, OnDestroy {
   ngOnInit(): void {
     this.initForm();
     this.initNewProduct();
-    this.getCategoryTree('tree');
+    this.getCategoryTree();
     this.addProductFormSub();
   }
 
@@ -39,7 +39,10 @@ export class AddProductComponent implements OnInit, OnDestroy {
       this.subscriptions.forEach(sub => sub.unsubscribe());
   }
 
-  getCategoryTree(id: string) {
+  /**
+   * @function getCategoryTree: function to get the products category tree
+   */
+  getCategoryTree() {
     const sub = this.productService.getCategoryTree().subscribe({
       next: (res) => {
         this.topCategoryTree = res.data;
@@ -48,6 +51,9 @@ export class AddProductComponent implements OnInit, OnDestroy {
     this.subscriptions.push(sub);
   }
 
+  /**
+   * @function initForm: function to initialize forms
+   */
   initForm() {
     this.addProductForm = this.fb.group({
       productName: this.fb.control('', [Validators.required]),
@@ -62,6 +68,9 @@ export class AddProductComponent implements OnInit, OnDestroy {
     });
   }
 
+  /**
+   * @function handleSubmit: function to handle product addition
+   */
   handleSubmit() {
     this.isAddingProduct = true;
     if (this.addProductForm.valid) {
@@ -95,11 +104,17 @@ export class AddProductComponent implements OnInit, OnDestroy {
     }
   }
 
+  /**
+   * @function handleCancel: function to handle cancellation of product addition
+   */
   handleCancel() {
     this.addProductForm.reset();
     this.router.navigate(['/admin/products']);
   }
 
+  /**
+   * @function initNewProduct: function to initialize a new product
+   */
   initNewProduct() {
     this.newProduct = {
       desc: '',
@@ -185,6 +200,9 @@ export class AddProductComponent implements OnInit, OnDestroy {
     };
   }
 
+  /**
+   * @function addProductFormSub: function to subscribe to the addProductForm value changes
+   */
   addProductFormSub() {
     // something changes in tlc
     const sub1 = this.addProductForm.controls['tlc'].valueChanges.subscribe({
@@ -197,8 +215,8 @@ export class AddProductComponent implements OnInit, OnDestroy {
         const sub2 = this.productService.getCategoryById(data).subscribe({
           next: (res) => {
             // assigning tlc slug and name values
-            this.newProduct!.category!.tlc_slug! = res.data.slug;
-            this.newProduct.category!.tlc_name = res.data.name;
+            this.newProduct.category.tlc_slug = res.data.slug;
+            this.newProduct.category.tlc_name = res.data.name;
 
             // found midCategory tree
             this.midCategoryTree = res.data.children;
@@ -215,13 +233,13 @@ export class AddProductComponent implements OnInit, OnDestroy {
                 );
 
                 // assign mlc id, name, slug
-                this.newProduct.category!.mlc_id = childData;
-                this.newProduct.category!.mlc_name = mlcChild?.name!;
-                this.newProduct.category!.mlc_slug = mlcChild?.slug!;
+                this.newProduct.category.mlc_id = childData;
+                this.newProduct.category.mlc_name = mlcChild.name;
+                this.newProduct.category.mlc_slug = mlcChild.slug;
 
                 // assign value to lowCategoryTree
                 if (mlcChild) {
-                  this.lowCategoryTree = mlcChild!.children;
+                  this.lowCategoryTree = mlcChild.children;
                 } else {
                   this.lowCategoryTree = [];
                 }
@@ -235,9 +253,9 @@ export class AddProductComponent implements OnInit, OnDestroy {
                     );
 
                     // assign llc id, name, slug
-                    this.newProduct.category!.llc_id = grandChild;
-                    this.newProduct.category!.llc_name = llcChild?.name!;
-                    this.newProduct.category!.llc_slug = llcChild?.slug!;
+                    this.newProduct.category.llc_id = grandChild;
+                    this.newProduct.category.llc_name = llcChild.name;
+                    this.newProduct.category.llc_slug = llcChild.slug;
                   },
                 });
                 this.subscriptions.push(sub4);

@@ -6,37 +6,45 @@ import { User } from 'src/shared/model/userModel';
 import { AuthService } from 'src/shared/services/auth/auth.service';
 import { UserService } from 'src/shared/services/user/user.service';
 import { OnDestroy } from '@angular/core';
-import {Subscription} from 'rxjs'
+import { Subscription } from 'rxjs';
 import { Order } from 'src/shared/model/orderModel';
 import { OrderService } from 'src/shared/services/order/order.service';
-
-
 
 @Component({
   selector: 'user-profile-area',
   templateUrl: './profile-area.component.html',
-  styleUrls: ['./profile-area.component.scss']
+  styleUrls: ['./profile-area.component.scss'],
 })
-export class ProfileAreaComponent implements OnInit, OnDestroy{
+export class ProfileAreaComponent implements OnInit, OnDestroy {
   isLoading = true;
   subscriptions: Subscription[] = [];
   user: User;
   editUserForm!: FormGroup;
   orderList: Order[] = [];
-  constructor(private fb: FormBuilder, private orderService: OrderService, private authService: AuthService, private userService: UserService, private snackbar: MatSnackBar, private router: Router){};
+  constructor(
+    private fb: FormBuilder,
+    private orderService: OrderService,
+    private authService: AuthService,
+    private userService: UserService,
+    private snackbar: MatSnackBar,
+    private router: Router
+  ) {}
 
   ngOnInit(): void {
-      this.getUserDetails();
-      this.getOrders();
+    this.getUserDetails();
+    this.getOrders();
   }
 
   ngOnDestroy(): void {
-      this.subscriptions.forEach(sub => sub.unsubscribe());
+    this.subscriptions.forEach((sub) => sub.unsubscribe());
   }
 
-  getUserDetails(){
+  /**
+   * @function getUserDetails: function to get the current user details
+   */
+  getUserDetails(): void {
     const userId = this.authService.getUserId();
-    if(userId !== null){
+    if (userId !== null) {
       const sub = this.userService.getUserById(userId).subscribe({
         next: (res) => {
           this.user = res.data;
@@ -44,14 +52,17 @@ export class ProfileAreaComponent implements OnInit, OnDestroy{
         },
         error: (er) => {
           console.error(er);
-        }
+        },
       });
 
       this.subscriptions.push(sub);
     }
   }
 
-  getOrders() {
+  /**
+   * @function getOrders: function to get the orders of the current user
+   */
+  getOrders(): void {
     const sub = this.orderService.getOrdersOfLoggedInUser().subscribe({
       next: (res) => {
         this.orderList = res.data;
@@ -59,54 +70,84 @@ export class ProfileAreaComponent implements OnInit, OnDestroy{
       },
       error: (er) => {
         console.error(er);
-      }
+      },
     });
     this.subscriptions.push(sub);
   }
 
-  initForm(){
+  /**
+   * @function initForm: function to initialize the forms
+   */
+  initForm(): void {
     this.editUserForm = this.fb.group({
-      firstname: this.fb.control(this.user.userFirstName, [Validators.required, Validators.minLength(3), Validators.maxLength(17)]),
-      lastname: this.fb.control(this.user.userLastName, [Validators.required, Validators.minLength(3), Validators.maxLength(17)]),
-      email: this.fb.control(this.user.userEmail, [Validators.email, Validators.required]),
-      phoneNo: this.fb.control(this.user.userPhone,[Validators.required, Validators.minLength(10), Validators.maxLength(13)]),
-    })
+      firstname: this.fb.control(this.user.userFirstName, [
+        Validators.required,
+        Validators.minLength(3),
+        Validators.maxLength(17),
+      ]),
+      lastname: this.fb.control(this.user.userLastName, [
+        Validators.required,
+        Validators.minLength(3),
+        Validators.maxLength(17),
+      ]),
+      email: this.fb.control(this.user.userEmail, [
+        Validators.email,
+        Validators.required,
+      ]),
+      phoneNo: this.fb.control(this.user.userPhone, [
+        Validators.required,
+        Validators.minLength(10),
+        Validators.maxLength(13),
+      ]),
+    });
   }
 
-  handleEditUser() {
-    if(this.editUserForm.valid){
-      let updatedUser = this.user;
+  /**
+   * @function handleEditUser: function to handle user editing
+   */
+  handleEditUser(): void {
+    if (this.editUserForm.valid) {
+      const updatedUser = this.user;
       const formValue = this.editUserForm.value;
       updatedUser.userFirstName = formValue.firstname;
       updatedUser.userLastName = formValue.lastname;
       updatedUser.userEmail = formValue.email;
       updatedUser.userPhone = formValue.phoneNo;
 
-      const sub = this.userService.updateUser(updatedUser, this.user.userId!).subscribe({
-        next: (res) => {
-          if(res.success) {
-            this.snackbar.open("User details updated", "Yayy!", {
-              duration: 3000
-            });
-          } else {
-            this.snackbar.open("Unable to edit user details", "Try later!", {
-              duration: 3000
-            });
-          }
-        }
-      });
+      const sub = this.userService
+        .updateUser(updatedUser, this.user.userId)
+        .subscribe({
+          next: (res) => {
+            if (res.success) {
+              this.snackbar.open('User details updated', 'Yayy!', {
+                duration: 3000,
+              });
+            } else {
+              this.snackbar.open('Unable to edit user details', 'Try later!', {
+                duration: 3000,
+              });
+            }
+          },
+        });
 
       this.subscriptions.push(sub);
     }
   }
 
-  handleLogout(){
+  /**
+   * @function handleLogout: function to handle user logout
+   */
+  handleLogout(): void {
     this.authService.clearSessionStorage();
     this.router.navigate(['/']);
   }
 
-  routeToOrder(orderId: String){
-    this.router.navigate(['/order/success'], {queryParams: {id: orderId}})
+  /**
+   * @function routeToOrder: function to navigate user to the respective order status page
+   * @param orderId 
+   */
+  routeToOrder(orderId: string): void {
+    this.router.navigate(['/order/success'], { queryParams: { id: orderId } });
   }
 
   // generatePDF(action = 'open') {
@@ -146,7 +187,7 @@ export class ProfileAreaComponent implements OnInit, OnDestroy{
   //               text: `Date: ${new Date().toLocaleString()}`,
   //               alignment: 'right'
   //             },
-  //             { 
+  //             {
   //               text: `Bill No : ${((Math.random() *1000).toFixed(0))}`,
   //               alignment: 'right'
   //             }
@@ -174,7 +215,7 @@ export class ProfileAreaComponent implements OnInit, OnDestroy{
   //       },
   //       {
   //           text: this.invoice.additionalDetails,
-  //           margin: [0, 0 ,0, 15]          
+  //           margin: [0, 0 ,0, 15]
   //       },
   //       {
   //         columns: [
@@ -199,7 +240,7 @@ export class ProfileAreaComponent implements OnInit, OnDestroy{
   //         bold: true,
   //         decoration: 'underline',
   //         fontSize: 14,
-  //         margin: [0, 15,0, 15]          
+  //         margin: [0, 15,0, 15]
   //       }
   //     }
   //   };
@@ -207,10 +248,10 @@ export class ProfileAreaComponent implements OnInit, OnDestroy{
   //   if(action==='download'){
   //     pdfMake.createPdf(docDefinition).download();
   //   }else if(action === 'print'){
-  //     pdfMake.createPdf(docDefinition).print();      
+  //     pdfMake.createPdf(docDefinition).print();
   //   }else{
-  //     pdfMake.createPdf(docDefinition).open();      
+  //     pdfMake.createPdf(docDefinition).open();
   //   }
 
-  // } 
+  // }
 }

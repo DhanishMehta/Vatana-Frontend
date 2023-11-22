@@ -121,69 +121,6 @@
                 </div>
             </div>
             <div class="col-lg-6">
-                <div class="ltn__checkout-payment-method mt-50">
-                    <h4 class="title-2">Payment Method</h4>
-                    <div id="checkout_accordion_1">
-                        <!-- card -->
-                        <div class="card">
-                            <h5 class="collapsed ltn__card-title" data-bs-toggle="collapse"
-                                data-bs-target="#faq-item-2-1" aria-expanded="false">
-                                Check payments
-                            </h5>
-                            <div id="faq-item-2-1" class="collapse" data-parent="#checkout_accordion_1">
-                                <div class="card-body">
-                                    <p>Please send a check to Store Name, Store Street, Store Town, Store State /
-                                        County, Store Postcode.</p>
-                                </div>
-                            </div>
-                        </div>
-                        <!-- card -->
-                        <div class="card">
-                            <h5 class="ltn__card-title" data-bs-toggle="collapse" data-bs-target="#faq-item-2-2"
-                                aria-expanded="true">
-                                Cash on delivery <img src="img/icons/cash.png" alt="#">
-                            </h5>
-                            <div id="faq-item-2-2" class="collapse show" data-parent="#checkout_accordion_1">
-                                <div class="card-body">
-                                    <p>Pay with cash upon delivery.</p>
-                                </div>
-                            </div>
-                        </div>
-                        <!-- card -->
-                        <div class="card">
-                            <h5 class="collapsed ltn__card-title" data-bs-toggle="collapse"
-                                data-bs-target="#faq-item-2-3" aria-expanded="false">
-                                ApplePay <img src="img/icons/applepay.png" alt="#">
-                            </h5>
-                            <div id="faq-item-2-3" class="collapse" data-parent="#checkout_accordion_1">
-                                <div class="card-body">
-                                    <p>Apple Pay is the modern way to pay.</p>
-                                </div>
-                            </div>
-                        </div>
-                        <!-- card -->
-                        <div class="card">
-                            <h5 class="collapsed ltn__card-title" data-bs-toggle="collapse"
-                                data-bs-target="#faq-item-2-4" aria-expanded="false">
-                                PayPal <img src="img/icons/payment-3.png" alt="#">
-                            </h5>
-                            <div id="faq-item-2-4" class="collapse" data-parent="#checkout_accordion_1">
-                                <div class="card-body">
-                                    <p>Pay via PayPal; you can pay with your credit card if you don’t have a PayPal
-                                        account.</p>
-                                </div>
-                            </div>
-                        </div>
-                    </div>
-                    <div class="ltn__payment-note mt-30 mb-30">
-                        <p>Your personal data will be used to process your order, support your experience throughout
-                            this website, and for other purposes described in our privacy policy.</p>
-                    </div>
-                    <button id="rzp-button1" class="btn theme-btn-1 btn-effect-1 text-uppercase" type="submit"
-                        [disabled]="orderDetails.invalid" (click)="handlePlaceOrder()">Proceed to Pay</button>
-                </div>
-            </div>
-            <div class="col-lg-6">
                 <div class="shoping-cart-total mt-50">
                     <h4 class="title-2">Cart Totals</h4>
                     <table class="table">
@@ -215,6 +152,8 @@
                             </tr>
                         </tbody>
                     </table>
+                    <button id="rzp-button1" class="btn theme-btn-1 btn-effect-1 text-uppercase mt-3" type="submit"
+                    [disabled]="orderDetails.invalid" (click)="handlePlaceOrder()">Proceed to Pay</button>
                 </div>
             </div>
         </div>

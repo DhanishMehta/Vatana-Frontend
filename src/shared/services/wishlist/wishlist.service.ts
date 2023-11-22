@@ -7,13 +7,13 @@ import { UserService } from '../user/user.service';
 import { CommonReponse } from 'src/shared/model/reqResModel';
 import { User } from 'src/shared/model/userModel';
 import { SERVER_API_BASE_URL } from 'src/shared/model/utility';
-import { OnInit, OnDestroy } from '@angular/core';
+import { OnDestroy } from '@angular/core';
 import { Subscription } from 'rxjs';
 
 @Injectable({
   providedIn: 'root',
 })
-export class WishlistService implements OnInit, OnDestroy {
+export class WishlistService implements OnDestroy {
   subscriptions: Subscription[] = [];
   initialwishlist: Product[] = [];
   wishlist: BehaviorSubject<Product[]> = new BehaviorSubject(
@@ -31,20 +31,30 @@ export class WishlistService implements OnInit, OnDestroy {
     }
   }
 
-  ngOnInit(): void {}
-
   ngOnDestroy(): void {
     this.subscriptions.forEach((sub) => sub.unsubscribe());
   }
 
+  /**
+   * @function getHeader: function to get HttpHeader with authorization
+   * @param token 
+   * @returns 
+   */
   getHeader(token: string): HttpHeaders {
     return new HttpHeaders({ Authorization: `Bearer ${token}` });
   }
 
+  /**
+   * @function getUserById: function to get the userId of logged in user
+   * @returns userID of logged in user
+   */
   getUserId() {
-    return this.authService.getUserId()!;
+    return this.authService.getUserId();
   }
 
+  /**
+   * @function getWishlist: function to get the wishlist of the logged in user
+   */
   getWishlist() {
     const userId = this.getUserId();
     if (userId !== null) {
@@ -64,6 +74,10 @@ export class WishlistService implements OnInit, OnDestroy {
     }
   }
 
+  /**
+   * @function addToWishlist: function to add a product to the wishlist
+   * @param productId 
+   */
   addToWishlist(productId: string) {
     const userId = this.getUserId();
     const token = this.authService.getToken();
@@ -78,7 +92,7 @@ export class WishlistService implements OnInit, OnDestroy {
       )
       .subscribe({
         next: (res) => {
-          this.initialwishlist = res.data.wishlist!;
+          this.initialwishlist = res.data.wishlist;
           this.wishlist.next(this.initialwishlist);
         },
         error: (er) => {
@@ -89,6 +103,10 @@ export class WishlistService implements OnInit, OnDestroy {
     this.subscriptions.push(sub);
   }
 
+  /**
+   * @function deleteFromWishlist: function to delete a product from the wishlist
+   * @param productId 
+   */
   deleteFromWishlist(productId: string) {
     const userId = this.getUserId();
     const token = this.authService.getToken();
@@ -99,7 +117,7 @@ export class WishlistService implements OnInit, OnDestroy {
       )
       .subscribe({
         next: (res) => {
-          this.initialwishlist = res.data.wishlist!;
+          this.initialwishlist = res.data.wishlist;
           this.wishlist.next(this.initialwishlist);
         },
         error: (er) => {

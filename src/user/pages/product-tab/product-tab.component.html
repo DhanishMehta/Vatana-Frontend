@@ -32,9 +32,9 @@
                             </div>
                         </li>
                         <li>
-                            <div class="short-by text-center">
+                            <!-- <div class="text-center short-by">
                                 <form [formGroup]="filterForm">
-                                    <select formControlName="sortBy" class="nice-select">
+                                    <select formControlName="sortBy" class="nice-select" (change)="populateProductsList()">
                                         <option value="">Default Sorting</option>
                                         <option value="rating-lth">Sort by rating: low to high</option>
                                         <option value="rating-htl">Sort by rating: high to low</option>
@@ -42,7 +42,7 @@
                                         <option value="price-htl">Sort by price: high to low</option>
                                     </select>
                                 </form>
-                            </div>
+                            </div> -->
                         </li>
                     </ul>
                 </div>
@@ -58,19 +58,7 @@
                         </div>
                     </div>
                 </div>
-                <div *ngIf="productTabViewOptions.pagination" class="ltn__pagination-area text-center">
-                    <div class="ltn__pagination">
-                        <ul>
-                            <li><a href="#"><i class="fas fa-angle-double-left"></i></a></li>
-                            <li><a href="#">1</a></li>
-                            <li class="active"><a href="#">2</a></li>
-                            <li><a href="#">3</a></li>
-                            <li><a href="#">...</a></li>
-                            <li><a href="#">10</a></li>
-                            <li><a href="#"><i class="fas fa-angle-double-right"></i></a></li>
-                        </ul>
-                    </div>
-                </div>
+                <app-custom-paginator *ngIf="productTabViewOptions.pagination && !isLoading" (page)="handlePageChange($event)" [length]="page.length" [pageSize]="page.pageSize"></app-custom-paginator>
             </div>
             <div *ngIf="productTabViewOptions.filterOptions" class="col-lg-4">
                 <aside class="sidebar ltn__shop-sidebar ltn__right-sidebar">

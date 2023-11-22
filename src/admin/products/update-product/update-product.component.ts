@@ -1,4 +1,4 @@
-import { Component } from '@angular/core';
+import { Component, OnDestroy, OnInit } from '@angular/core';
 import { FormBuilder, FormGroup, Validators } from '@angular/forms';
 import { MatSnackBar } from '@angular/material/snack-bar';
 import { ActivatedRoute, Router } from '@angular/router';
@@ -11,7 +11,7 @@ import { ProductService } from 'src/shared/services/product/product.service';
   templateUrl: './update-product.component.html',
   styleUrls: ['./update-product.component.scss']
 })
-export class UpdateProductComponent {
+export class UpdateProductComponent implements OnInit, OnDestroy{
   product: Product;
   subscriptions: Subscription[] = [];
   topCategoryTree!: CategoryOfTree[];
@@ -41,13 +41,16 @@ export class UpdateProductComponent {
     });
     this.getProduct();
     // this.initNewProduct();
-    this.getCategoryTree('tree');
+    this.getCategoryTree();
   }
 
   ngOnDestroy(): void {
       this.subscriptions.forEach(sub => sub.unsubscribe());
   }
 
+  /**
+   * @function getProduct: function to get the active product
+   */
   getProduct() {
     const sub = this.activeRoute.params.subscribe({
       next: (param) => {
@@ -60,14 +63,18 @@ export class UpdateProductComponent {
           }, error: (er) => {
             console.error(er);
           }
-        })
+        });
+        this.subscriptions.push(innerSub);
       }
     });
 
     this.subscriptions.push(sub);
   }
 
-  getCategoryTree(id: string) {
+  /**
+   * @function getCategoryTree: function to get the products category tree
+   */
+  getCategoryTree() {
     const sub = this.productService.getCategoryTree().subscribe({
       next: (res) => {
         this.topCategoryTree = res.data;
@@ -76,6 +83,9 @@ export class UpdateProductComponent {
     this.subscriptions.push(sub);
   }
 
+  /**
+   * @function initForm: funcion to initialze the forms
+   */
   initForm() {
     this.addProductForm = this.fb.group({
       productName: this.fb.control(this.product.desc, [Validators.required]),
@@ -89,6 +99,9 @@ export class UpdateProductComponent {
     });
   }
 
+  /**
+   * @function handleSubmit: function to handle the updation of products
+   */
   handleSubmit() {
     this.isAddingProduct = true;
     if (this.addProductForm.valid) {
@@ -122,11 +135,17 @@ export class UpdateProductComponent {
     }
   }
 
+  /**
+   * @function handleCancel: fucntion to handle the cancellation of update products
+   */
   handleCancel() {
     this.addProductForm.reset();
     this.router.navigate(['/admin/products']);
   }
 
+  /**
+   * @function initNewProduct: function to initialize a new product
+   */
   initNewProduct() {
     this.product = {
       desc: '',
@@ -212,6 +231,9 @@ export class UpdateProductComponent {
     };
   }
 
+  /**
+   * @function productCategoryFormSub: function to subscribe to the product category form value changes
+   */
   productCategoryFormSub() {
     // something changes in tlc
     const sub1 = this.addProductForm.controls['tlc'].valueChanges.subscribe({
@@ -224,8 +246,8 @@ export class UpdateProductComponent {
         const sub2 = this.productService.getCategoryById(data).subscribe({
           next: (res) => {
             // assigning tlc slug and name values
-            this.product!.category!.tlc_slug! = res.data.slug;
-            this.product.category!.tlc_name = res.data.name;
+            this.product.category.tlc_slug = res.data.slug;
+            this.product.category.tlc_name = res.data.name;
 
             // found midCategory tree
             this.midCategoryTree = res.data.children;
@@ -242,13 +264,13 @@ export class UpdateProductComponent {
                 );
 
                 // assign mlc id, name, slug
-                this.product.category!.mlc_id = childData;
-                this.product.category!.mlc_name = mlcChild?.name!;
-                this.product.category!.mlc_slug = mlcChild?.slug!;
+                this.product.category.mlc_id = childData;
+                this.product.category.mlc_name = mlcChild.name;
+                this.product.category.mlc_slug = mlcChild.slug;
 
                 // assign value to lowCategoryTree
                 if (mlcChild) {
-                  this.lowCategoryTree = mlcChild!.children;
+                  this.lowCategoryTree = mlcChild.children;
                 } else {
                   this.lowCategoryTree = [];
                 }
@@ -262,9 +284,9 @@ export class UpdateProductComponent {
                     );
 
                     // assign llc id, name, slug
-                    this.product.category!.llc_id = grandChild;
-                    this.product.category!.llc_name = llcChild?.name!;
-                    this.product.category!.llc_slug = llcChild?.slug!;
+                    this.product.category.llc_id = grandChild;
+                    this.product.category.llc_name = llcChild.name;
+                    this.product.category.llc_slug = llcChild.slug;
                   },
                 });
                 this.subscriptions.push(sub4);

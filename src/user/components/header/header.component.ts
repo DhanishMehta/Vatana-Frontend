@@ -25,15 +25,26 @@ export class HeaderComponent implements OnInit, OnDestroy {
       this.subscriptions.forEach(sub => sub.unsubscribe());
   }
 
-  isLoggedIn() {
+  /**
+   * @function isLoggedIn: funciton to check if the user is logged in
+   * @returns boolean
+   */
+  isLoggedIn(): boolean {
     return this.authService.isLoggedIn()
   }
 
-  isAdmin() {
+  /**
+   * @function isAdmin: function to check if the user is Admin
+   * @returns booelan
+   */
+  isAdmin(): boolean {
     return this.isLoggedIn() && this.authService.getRole() === "ADMIN";
   }
 
-  getCartItemsCount() {
+  /**
+   * @function getCartItemsCount: function to get the count of cart items of current users cart
+   */
+  getCartItemsCount(): void {
     const sub = this.cartService.cart$.subscribe({
       next: (res) => {
         this.totalCartItems = res.cartItems.length.toString();
@@ -44,7 +55,10 @@ export class HeaderComponent implements OnInit, OnDestroy {
     this.subscriptions.push(sub);
   }
 
-  getWishListItemsCount() {
+  /**
+   * @function getWishListItemsCount: function to get the wishlist items count of current users 
+   */
+  getWishListItemsCount(): void {
     const sub = this.wishlistService.wishlist$.subscribe({
       next: (res) => {
         this.totalWishlistItems = res.length.toString();

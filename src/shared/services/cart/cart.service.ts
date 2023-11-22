@@ -1,9 +1,9 @@
 import { HttpClient, HttpHeaders } from '@angular/common/http';
-import { Injectable, OnInit } from '@angular/core';
+import { Injectable } from '@angular/core';
 import { AuthService } from '../auth/auth.service';
 import { Cart, User } from 'src/shared/model/userModel';
 import { UserService } from '../user/user.service';
-import { BehaviorSubject, of } from 'rxjs';
+import { BehaviorSubject } from 'rxjs';
 import { CommonReponse } from 'src/shared/model/reqResModel';
 import { SERVER_API_BASE_URL } from 'src/shared/model/utility';
 import { OnDestroy } from '@angular/core';
@@ -12,7 +12,7 @@ import { Subscription } from 'rxjs';
 @Injectable({
   providedIn: 'root',
 })
-export class CartService implements OnInit, OnDestroy {
+export class CartService implements OnDestroy {
   subscriptions: Subscription[] = [];
   initialCart: Cart = {
     cartItems: [],
@@ -30,20 +30,30 @@ export class CartService implements OnInit, OnDestroy {
     }
   }
 
-  ngOnInit(): void {}
-
   ngOnDestroy(): void {
     this.subscriptions.forEach((sub) => sub.unsubscribe());
   }
 
+  /**
+   * @function getHeader: function to get HTTPHeader with Authorization
+   * @param token: JWT token of the current user
+   * @returns HTTPHeader with Authorization Bearer JWT token key value pair
+   */
   getHeader(token: string): HttpHeaders {
     return new HttpHeaders({ Authorization: `Bearer ${token}` });
   }
 
+  /**
+   * @function getUserById: function to get the userId of the current user
+   * @returns userId of the current user
+   */
   getUserId() {
-    return this.authService.getUserId()!;
+    return this.authService.getUserId();
   }
 
+  /**
+   * @function getCart: function to get the Cart of the current user
+   */
   getCart() {
     const userId = this.getUserId();
     if (userId !== null) {
@@ -66,6 +76,10 @@ export class CartService implements OnInit, OnDestroy {
     }
   }
 
+  /**
+   * @function addToCart: function to add a product to cart
+   * @param productId: Id of product to be added to cart
+   */
   addToCart(productId: string) {
     const userId = this.getUserId();
     const token = this.authService.getToken();
@@ -80,7 +94,7 @@ export class CartService implements OnInit, OnDestroy {
       )
       .subscribe({
         next: (res) => {
-          this.initialCart = res.data.cart!;
+          this.initialCart = res.data.cart;
           this.cart.next(this.initialCart);
         },
         error: (er) => {
@@ -91,6 +105,10 @@ export class CartService implements OnInit, OnDestroy {
     this.subscriptions.push(sub);
   }
 
+  /**
+   * @function deleteFromCart: function to delete a product from cart
+   * @param productId: Id of product to be deleted from cart 
+   */
   deleteFromCart(productId: string) {
     const userId = this.getUserId();
     const token = this.authService.getToken();
@@ -101,7 +119,7 @@ export class CartService implements OnInit, OnDestroy {
       )
       .subscribe({
         next: (res) => {
-          this.initialCart = res.data.cart!;
+          this.initialCart = res.data.cart;
           this.cart.next(this.initialCart);
         },
         error: (er) => {
@@ -112,6 +130,9 @@ export class CartService implements OnInit, OnDestroy {
     this.subscriptions.push(sub);
   }
 
+  /**
+   * @function clearCart: function to clear the current users cart
+   */
   clearCart() {
     const userId = this.getUserId();
     const token = this.authService.getToken();
@@ -137,5 +158,7 @@ export class CartService implements OnInit, OnDestroy {
           console.error(er);
         },
       });
+
+      this.subscriptions.push(sub);
   }
 }

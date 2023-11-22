@@ -32,7 +32,7 @@
                 <td style="vertical-align: middle;" class="text-truncate text-center">{{order.address.addressLineOne}}</td>
                 <td style="vertical-align: middle;" class="text-truncate text-center">{{order.paymentDetails.paymentMethod}}</td>
                 <td style="vertical-align: middle;" class="text-truncate text-center">₹{{order.pricing.grandTotal}}</td>
-                <td style="vertical-align: middle;" class="text-truncate text-center rounded-pill py-0 px-0" [ngClass]="{'order-status-primary' : order.orderStatus=='INITIALIZED', 'order-status-progress' : order.orderStatus=='INPROGRESS', 'order-status-delivered' : order.orderStatus=='DELIVERED', }">{{order.orderStatus}}</td>
+                <td style="vertical-align: middle;" class="text-truncate text-center rounded-pill py-0 px-0" [ngClass]="{'order-status-primary' : order.orderStatus==='INITIALIZED', 'order-status-progress' : order.orderStatus==='INPROGRESS', 'order-status-delivered' : order.orderStatus==='DELIVERED', }">{{order.orderStatus}}</td>
             </tr>
         </tbody>
 

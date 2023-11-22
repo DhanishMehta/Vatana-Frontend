@@ -11,9 +11,9 @@ export class ReviewDisplayComponent implements OnInit{
   halfStar = 0;
   noStar = 0
 
-  fullStarArr = Array();
-  noStarArr = Array();
-  halfStarArr = Array();
+  fullStarArr = [];
+  noStarArr = [];
+  halfStarArr = [];
 
  ngOnInit(): void {
     const rate = Number(this.rating);``

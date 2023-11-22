@@ -16,7 +16,7 @@ import {Subscription} from 'rxjs'
 export class CartMenuComponent implements OnInit, OnDestroy {
   subscriptions: Subscription[] = [];
   cart!: Cart;
-  displayCart: boolean = false;
+  displayCart = false;
   constructor(
     private cartService: CartService,
     private userService: UserService,
@@ -30,11 +30,18 @@ export class CartMenuComponent implements OnInit, OnDestroy {
       this.subscriptions.forEach(sub => sub.unsubscribe());
   }
 
+  /**
+   * @function isLoggedIn: function to check if the user is logged in
+   * @returns boolean
+   */
   isLoggedIn() :boolean {
     return this.authService.isLoggedIn();
   }
 
-  getCart() {
+  /**
+   * @function getCart: function to get the cart of the current user
+   */
+  getCart(): void {
     if (this.authService.isLoggedIn()) {
       const sub = this.cartService.cart$.subscribe({
         next: (data) => {
@@ -51,6 +58,10 @@ export class CartMenuComponent implements OnInit, OnDestroy {
     }
   }
 
+  /**
+   * @function deleteFromCart: function to delete product with productId from cart
+   * @param productId 
+   */
   deleteFromCart(productId: string) {
     this.cartService.deleteFromCart(productId);
   }

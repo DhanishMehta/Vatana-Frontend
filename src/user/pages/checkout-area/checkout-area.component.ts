@@ -19,7 +19,7 @@ import { CartService } from 'src/shared/services/cart/cart.service';
 import { CouponService } from 'src/shared/services/coupon/coupon.service';
 import { MatSnackBar } from '@angular/material/snack-bar';
 
-declare var Razorpay: any;
+declare const Razorpay: any;
 
 @Component({
   selector: 'user-checkout-area',
@@ -60,9 +60,9 @@ export class CheckoutAreaComponent implements OnInit, OnDestroy {
     this.subscriptions.forEach((sub) => sub.unsubscribe());
   }
 
-  getUser() {
+  getUser(): void {
     const userId = this.authService.getUserId();
-    const sub = this.userService.getUserById(userId!).subscribe({
+    const sub = this.userService.getUserById(userId).subscribe({
       next: (res) => {
         this.user = res.data;
         this.initForms();
@@ -75,7 +75,10 @@ export class CheckoutAreaComponent implements OnInit, OnDestroy {
     this.subscriptions.push(sub);
   }
 
-  initForms() {
+  /**
+   * @function initForms: function to initialize forms
+   */
+  initForms(): void {
     this.couponCode = this.fb.control('');
     this.orderDetails = this.fb.array([
       (this.billingDetails = this.fb.group({
@@ -138,7 +141,10 @@ export class CheckoutAreaComponent implements OnInit, OnDestroy {
     this.isLoading = false;
   }
 
-  handleAddCouponCode() {
+  /**
+   * @function handleAddCouponCode: function to handle add coupon code
+   */
+  handleAddCouponCode(): void {
     const couponCode = this.couponForm.get('couponCode').value;
     this.couponService.validateCoupon(couponCode).subscribe({
       next: (res) => {
@@ -154,7 +160,10 @@ export class CheckoutAreaComponent implements OnInit, OnDestroy {
     })
   }
 
-  handlePlaceOrder() {
+  /**
+   * @function handlePlaceOrder: function to handle order placing
+   */
+  handlePlaceOrder(): void {
     if (this.orderDetails.valid) {
       this.updateNewOrder();
       this.postOrderToServer();
@@ -163,7 +172,10 @@ export class CheckoutAreaComponent implements OnInit, OnDestroy {
     }
   }
 
-  updateNewOrder() {
+  /**
+   * @function updateNewOrder: function to update new order item
+   */
+  updateNewOrder(): void {
     const formValue = this.orderDetails.value;
     const userId = this.authService.getUserId();
     this.newOrder = {
@@ -203,12 +215,15 @@ export class CheckoutAreaComponent implements OnInit, OnDestroy {
     this.setPriceInOrder();
   }
 
-  setItemsInOrder() {
+  /**
+   * @function setItemsInOrder: function to set items in order
+   */
+  setItemsInOrder(): void {
     this.newOrder.items = [];
     this.user.cart?.cartItems.forEach((item) => {
       const newCheckoutItem: CheckoutItem = {
         productName: item.cartItemProduct.desc,
-        productImage: item.cartItemProduct.images![0].m,
+        productImage: item.cartItemProduct.images[0].m,
         price: item.cartItemProduct.pricing.discount.mrp,
         quantity: item.cartItemQuantity,
       };
@@ -216,8 +231,11 @@ export class CheckoutAreaComponent implements OnInit, OnDestroy {
     });
   }
 
-  setPriceInOrder() {
-    this.newOrder.pricing.orderTotal = this.user.cart?.cartTotal!;
+  /**
+   * @function setPriceInOrder: funciton to set pricing details in neworder
+   */
+  setPriceInOrder(): void {
+    this.newOrder.pricing.orderTotal = this.user.cart.cartTotal;
     let discount = 0;
     this.user.cart?.cartItems.forEach((item) => {
       discount +=
@@ -242,11 +260,17 @@ export class CheckoutAreaComponent implements OnInit, OnDestroy {
     );
   }
 
-  clearCart() {
+  /**
+   * @function clearCart: function to clear the cart
+   */
+  clearCart(): void {
     this.cartService.clearCart();
   }
 
-  postOrderToServer() {
+  /**
+   * @function postOrderToServer: function to post the new order to server/backend
+   */
+  postOrderToServer(): void {
     const sub = this.orderService.postOrder(this.newOrder).subscribe({
       next: (res) => {
         this.newOrder.orderId = res.data.orderId;
@@ -261,9 +285,12 @@ export class CheckoutAreaComponent implements OnInit, OnDestroy {
     this.subscriptions.push(sub);
   }
 
-  handlePayment() {
-    let totAmount = this.newOrder.pricing.grandTotal;
-    var options = {
+  /**
+   * @function handlePayment: function to handle the Razorpay payemnt
+   */
+  handlePayment(): void {
+    const totAmount = this.newOrder.pricing.grandTotal;
+    const options = {
       key: 'rzp_test_7o9eJC3c7HeJpn', // Enter the Key ID generated from the Dashboard
       amount: totAmount * 100, // Amount is in currency subunits. Default currency is INR. Hence, 50000 refers to 50000 paise
       currency: 'INR',

@@ -85,20 +85,20 @@
                                                 <form [formGroup]="editUserForm">
                                                     <div class="row mb-50">
                                                         <div class="col-md-6">
-                                                            <label>First name:</label>
-                                                            <input formControlName="firstName" type="text" name="ltn__name" [value]="user.userFirstName">
+                                                            <label for="firstName">First name:</label>
+                                                            <input id="firstName" formControlName="firstName" type="text" name="ltn__name" [value]="user.userFirstName">
                                                         </div>
                                                         <div class="col-md-6">
-                                                            <label>Last name:</label>
-                                                            <input formControlName="lastName" type="text" name="ltn__lastname" [value]="user.userLastName">
+                                                            <label for="lastName">Last name:</label>
+                                                            <input id="lastName" formControlName="lastName" type="text" name="ltn__lastname" [value]="user.userLastName">
                                                         </div>
                                                         <div class="col-md-6">
-                                                            <label>Email:</label>
-                                                            <input formControlName="email" type="email" name="ltn__lastname" [value]="user.userEmail">
+                                                            <label for="email">Email:</label>
+                                                            <input id="email" formControlName="email" type="email" name="ltn__lastname" [value]="user.userEmail">
                                                         </div>
                                                         <div class="col-md-6">
-                                                            <label>Phone Number</label>
-                                                            <input formControlName="phoneNo" type="text" name="ltn__lastname" [value]="user.userPhone">
+                                                            <label for="phoneNo">Phone Number</label>
+                                                            <input id="phoneNo" formControlName="phoneNo" type="text" name="ltn__lastname" [value]="user.userPhone">
                                                         </div>
                                                     </div>
                                                     <div class="btn-wrapper">

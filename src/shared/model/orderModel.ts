@@ -1,8 +1,8 @@
 import { Address } from './userModel';
 
 export interface Order {
-  orderId?: String;
-  userId: String;
+  orderId?: string;
+  userId: string;
   billingDetails: Billing;
   address: Address;
   paymentDetails: PaymentDetails;

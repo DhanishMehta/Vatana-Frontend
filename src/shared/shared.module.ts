@@ -8,6 +8,7 @@ import { AlertDialogComponent } from './components/alert-dialog/alert-dialog.com
 import { PreLoaderComponent } from './components/pre-loader/pre-loader.component';
 import { RatingFormComponent } from './components/rating-form/rating-form.component';
 import { ReviewDisplayComponent } from './components/review-display/review-display.component';
+import { CustomPaginatorComponent } from './components/custom-paginator/custom-paginator.component';
 
 const importModules = [
   MaterialModule,
@@ -21,7 +22,8 @@ const shareComponents = [
   AlertDialogComponent,
   PreLoaderComponent,
   RatingFormComponent,
-  ReviewDisplayComponent
+  ReviewDisplayComponent,
+  CustomPaginatorComponent
 ]
 
 @NgModule({
@@ -31,6 +33,7 @@ const shareComponents = [
     PreLoaderComponent,
     RatingFormComponent,
     ReviewDisplayComponent,
+    CustomPaginatorComponent,
   ],
   imports: [CommonModule, ...importModules],
   exports: [...importModules, ...shareComponents],

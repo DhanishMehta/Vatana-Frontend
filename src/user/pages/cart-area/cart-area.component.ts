@@ -18,7 +18,7 @@ export class CartAreaComponent implements OnInit, OnDestroy {
   subscriptions: Subscription[] = [];
   isLoading = true;
   cart!: Cart;
-  displayCart: boolean = false;
+  displayCart = false;
   couponCode: FormControl;
   couponDiscount = 0;
   constructor(
@@ -39,11 +39,18 @@ export class CartAreaComponent implements OnInit, OnDestroy {
     this.subscriptions.forEach((sub) => sub.unsubscribe());
   }
 
+  /**
+   * @function isLoggedIn: checks if the user is logged in
+   * @returns boolean
+   */
   isLoggedIn(): boolean {
     return this.authService.isLoggedIn();
   }
 
-  getCart() {
+  /**
+   * @function getCart: function to get the cart of the logged in user
+   */
+  getCart(): void {
     if (this.authService.isLoggedIn()) {
       const sub = this.cartService.cart$.subscribe({
         next: (data) => {
@@ -61,21 +68,44 @@ export class CartAreaComponent implements OnInit, OnDestroy {
     }
   }
 
-  deleteFromCart(productId: string) {
+  /**
+   * @function deleteFromCart: function to delete item from cart
+   * @param productId 
+   */
+  deleteFromCart(productId: string): void {
     this.cartService.deleteFromCart(productId);
   }
 
-  addToCart(productId: string) {
+  /**
+   * @function addToCart: function to add product with productId to cart
+   * @param productId 
+   */
+  addToCart(productId: string): void {
     this.cartService.addToCart(productId);
   }
 
-  removeEntireProduct(productId: string) {}
+  /**
+   * @function removeEntireProduct: function to remove the entire product from cart
+   * @param productId 
+   */
+  removeEntireProduct(productId: string): void {
+    this.deleteFromCart(productId);
+  }
 
-  displayTotal(qty: number, itemPrice: string) {
+  /**
+   * @function displayTotal: utility function to find product of 2 numbers
+   * @param qty 
+   * @param itemPrice 
+   * @returns product of the 2 input variables
+   */
+  displayTotal(qty: number, itemPrice: string): string {
     return (Number(qty) * Number(itemPrice)).toFixed(2);
   }
 
-  handleAddCouponCode() {
+  /**
+   * @function handleAddCouponCode: funciton to handle coupon code addition
+   */
+  handleAddCouponCode(): void {
     const couponCode = this.couponCode.value;
     this.couponService.validateCoupon(couponCode).subscribe({
       next: (res) => {

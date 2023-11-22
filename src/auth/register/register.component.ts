@@ -7,7 +7,7 @@ import { AuthService } from 'src/shared/services/auth/auth.service';
 import { OnInit, OnDestroy } from '@angular/core';
 import { Subscription } from 'rxjs';
 
-export const StrongPasswordRegx: RegExp =
+export const StrongPasswordRegx =
   /^(?=[^A-Z]*[A-Z])(?=[^a-z]*[a-z])(?=\D*\d).{8,}$/;
 
 @Component({
@@ -18,7 +18,7 @@ export const StrongPasswordRegx: RegExp =
 export class AuthRegisterComponent implements OnInit, OnDestroy {
   subscriptions: Subscription[] = [];
   registerForm!: FormGroup;
-  userToken: string = '';
+  userToken = '';
   usernames: string[] = [];
   isPasswordVisibile = false;
 
@@ -38,6 +38,9 @@ export class AuthRegisterComponent implements OnInit, OnDestroy {
     this.subscriptions.forEach((sub) => sub.unsubscribe());
   }
 
+  /**
+   * @function initForm: fucntion to initialize forms
+   */
   initForm() {
     this.registerForm = this.fb.group({
       userFirstName: this.fb.control('', [Validators.required]),
@@ -51,15 +54,23 @@ export class AuthRegisterComponent implements OnInit, OnDestroy {
     });
   }
 
-  isEmailUnique() {
+  /**
+   * @function isEmailUnique: function to check if the email is unique
+   * @returns 
+   */
+  isEmailUnique(): boolean {
     const newEmail = this.registerForm.controls['userEmail'].value;
     if (this.usernames.includes(newEmail)) return false;
     else return true;
   }
 
+  /**
+   * @function buildNewUser: funciton to build new user from the form valuess
+   * @returns new user
+   */
   buildNewUser(): User {
     const formValue = this.registerForm.value;
-    let newUser: User = {
+    const newUser: User = {
       userFirstName: formValue.userFirstName,
       userLastName: formValue.userLastName,
       userPhone: formValue.userPhone,
@@ -71,7 +82,11 @@ export class AuthRegisterComponent implements OnInit, OnDestroy {
     return newUser;
   }
 
-  handleRegister() {
+  /**
+   * @function handleRegister: function to handle the new user registration
+   * @returns 
+   */
+  handleRegister(): void {
     if (this.registerForm.valid) {
       if (!this.isEmailUnique()) {
         this.snackBar.open('This Email already exists.', 'Okay');
@@ -87,7 +102,7 @@ export class AuthRegisterComponent implements OnInit, OnDestroy {
             action = 'Yayy!!';
             this.authService.setToken(res.data.token);
             this.authService.setRole(res.data.data.userRole);
-            this.authService.setUserId(res.data.data.userId!);
+            this.authService.setUserId(res.data.data.userId);
           }
           this.snackBar.open(message, action, {
             duration: 3000,

@@ -28,7 +28,7 @@
         <tbody id="table-body">
             <tr *ngFor="let product of productList" id="product-{{product.id}}">
                 <td><img style="mix-blend-mode: multiply; max-width: 40px;"
-                        [src]="product.images![0].s"></td>
+                        [src]="product.images[0].s" [alt]="product.desc"></td>
                 <td style="vertical-align: middle;" class="text-truncate text-center">{{product.brand.name}}</td>
                 <td style="vertical-align: middle;" class="text-truncate">{{product.desc}}</td>
                 <td style="vertical-align: middle;" class="text-truncate text-center">{{product.category.tlc_name}}</td>

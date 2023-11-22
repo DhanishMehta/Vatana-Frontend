@@ -1,4 +1,4 @@
-import { Component, Input, OnInit } from '@angular/core';
+import { Component, Input } from '@angular/core';
 
 export interface Card {
   title: string;
@@ -13,8 +13,6 @@ export interface Card {
   templateUrl: './card.component.html',
   styleUrls: ['./card.component.scss'],
 })
-export class  CardComponent implements OnInit{
+export class  CardComponent{
   @Input() card: Card | undefined;
-  ngOnInit(): void {
-  }
 }

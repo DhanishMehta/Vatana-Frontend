@@ -1,5 +1,4 @@
 import { Component } from '@angular/core';
-import { ActivatedRoute } from '@angular/router';
 
 @Component({
   selector: 'app-user',
@@ -8,7 +7,10 @@ import { ActivatedRoute } from '@angular/router';
 })
 export class UserComponent {
 
-  isHomePage() {
+  /**
+   * @function isHomePage: function to check if the current page is Home page
+   */
+  isHomePage(): boolean {
     return window.location.pathname === '/';
   }
 }

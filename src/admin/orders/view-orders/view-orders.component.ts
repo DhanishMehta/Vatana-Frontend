@@ -62,7 +62,7 @@ export class ViewOrdersComponent implements OnInit, OnDestroy {
     this.initForm();
     this.handlePagination();
     this.searchForm.valueChanges.subscribe({
-      next: (value) => {
+      next: () => {
         this.handlePagination();
       },
     });
@@ -72,12 +72,18 @@ export class ViewOrdersComponent implements OnInit, OnDestroy {
       this.subscriptions.forEach(sub => sub.unsubscribe());
   }
 
+  /**
+   * function to initialize forms
+   */
   initForm() {
     this.searchForm = this.fb.group({
       searchQuery: this.fb.control(''),
     });
   }
 
+  /**
+   * function to handle pagination
+   */
   handlePagination() {
     this.isLoading = true;
     this.subscriptions.forEach((sub) => sub.unsubscribe);

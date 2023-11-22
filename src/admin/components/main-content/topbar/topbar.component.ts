@@ -23,6 +23,9 @@ export class TopbarComponent implements OnInit, OnDestroy {
       this.subsriptions.forEach(sub => sub.unsubscribe());
   }
 
+  /**
+   * function to get user
+   */
   getUser(){
     const userId = this.authService.getUserId();
     this.userService.getUserById(userId).subscribe({

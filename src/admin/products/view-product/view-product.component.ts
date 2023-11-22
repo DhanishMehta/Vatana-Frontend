@@ -67,7 +67,7 @@ export class ViewProductComponent implements OnInit, OnDestroy{
     this.initForm();
     this.handlePagination();
     this.searchForm.valueChanges.subscribe({
-      next: (value) => {
+      next: () => {
         this.handlePagination();
       },
     });
@@ -77,12 +77,18 @@ export class ViewProductComponent implements OnInit, OnDestroy{
       this.subscriptions.forEach(sub => sub.unsubscribe());
   }
 
+  /**
+   * @function initForm: funciton to initialize forms
+   */
   initForm() {
     this.searchForm = this.fb.group({
       searchQuery: this.fb.control(''),
     });
   }
 
+  /**
+   * @function handlePagination: function to get paginated products and handle pagination
+   */
   handlePagination() {
     this.isLoading = true;
 
@@ -110,14 +116,22 @@ export class ViewProductComponent implements OnInit, OnDestroy{
     this.subscriptions.push(sub);
   }
 
+  /**
+   * @function handlePageEvent: function to handle page change in paginator
+   * @param e 
+   */
   handlePageEvent(e: PageEvent) {
     this.pageEvent = e;
     this.handlePagination();
   }
 
+  /**
+   * @function handleDeleteProduct: function to handle deletion of products
+   * @param productId 
+   */
   handleDeleteProduct(productId: string) {
     const sub = this.productService.deleteProduct(productId).subscribe({
-      next: (res) => {
+      next: () => {
         this.snackBar.open('The Product is Deleted!', 'Ok', {
           duration: 4000,
         });

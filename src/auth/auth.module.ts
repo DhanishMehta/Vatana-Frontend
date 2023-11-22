@@ -5,14 +5,12 @@ import { AuthRoutingModule } from './auth-routing.module';
 import { SharedModule } from 'src/shared/shared.module';
 import { AuthLoginComponent } from './login/login.component';
 import { AuthRegisterComponent } from './register/register.component';
-import { LogoutComponent } from './logout/logout.component';
 
 
 @NgModule({
   declarations: [
     AuthLoginComponent,
-    AuthRegisterComponent,
-    LogoutComponent
+    AuthRegisterComponent
   ],
   imports: [
     CommonModule,
